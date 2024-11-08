@@ -1,0 +1,4 @@
+enum UserRole{
+CUSTOMER, 
+RESTAURANT_OWNER
+}
