@@ -1,7 +1,9 @@
 import 'package:eco_bite/core/app_color.dart';
 import 'package:eco_bite/core/search.dart';
+import 'package:eco_bite/features/Authentification/logic/cubit/auth_cubit.dart';
 import 'package:eco_bite/features/home/ui/carousel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -26,11 +28,11 @@ class _HomeState extends State<Home> {
       
       appBar: AppBar(
         backgroundColor: Colors.white,
-        actions: const [
+        actions:  [
           Padding(
             padding: EdgeInsets.all(8.0),
             child: 
-            CircleAvatar(backgroundImage: AssetImage("assets/profile.jpg"), radius: 30,),
+            GestureDetector(child: CircleAvatar(backgroundImage: AssetImage("assets/profile.jpg"), radius: 30,),onTap: context.read<AuthCubit>().signOut,),
           )
         ],
         centerTitle: true,

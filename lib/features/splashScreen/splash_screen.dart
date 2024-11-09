@@ -17,12 +17,15 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     // Start a timer that lasts for 3 seconds
-    Timer(const Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 3), (){
       // Navigate to the next screen (e.g., HomeScreen)
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => WelcomePage()),
-      );
+                if (mounted) {
+      Navigator.pushReplacementNamed(context, '/welcomepage');
+    }
+      // Navigator.pushReplacement(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => WelcomePage()),
+      // );
     });
   }
   @override
