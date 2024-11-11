@@ -37,7 +37,6 @@ class AuthCubit extends Cubit<AuthState> {
 
   @override
   Future<void> close() {
-    // Dispose controllers when Cubit is closed
     emailController.dispose();
     passwordController.dispose();
     usernameController.dispose();

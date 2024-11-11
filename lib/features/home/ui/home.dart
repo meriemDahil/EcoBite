@@ -1,12 +1,14 @@
 import 'package:eco_bite/core/app_color.dart';
 import 'package:eco_bite/core/search.dart';
+import 'package:eco_bite/features/Authentification/data/user_model.dart';
 import 'package:eco_bite/features/Authentification/logic/cubit/auth_cubit.dart';
 import 'package:eco_bite/features/home/ui/carousel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Home extends StatefulWidget {
-  const Home({super.key});
+  final UserModel? user;
+  Home({super.key, required this.user });
 
   @override
   State<Home> createState() => _HomeState();
@@ -54,12 +56,12 @@ class _HomeState extends State<Home> {
           )
         ],
         centerTitle: true,
-        title:const Column(
+        title: Column(
           children:[
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Livrez à "),
+                Text(widget.user!.username),
                 Icon( Icons.arrow_drop_down_outlined)
               ],
             ),

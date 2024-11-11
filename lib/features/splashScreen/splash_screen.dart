@@ -17,15 +17,10 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     // Start a timer that lasts for 3 seconds
-    Timer(const Duration(seconds: 3), (){
-      // Navigate to the next screen (e.g., HomeScreen)
+    Timer(const Duration(seconds: 4), (){
                 if (mounted) {
       Navigator.pushReplacementNamed(context, '/welcomepage');
     }
-      // Navigator.pushReplacement(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => WelcomePage()),
-      // );
     });
   }
   @override
@@ -34,7 +29,6 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: AppColor.primary,
       body: Center(
         child: Column(
-          //crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Image(image: AssetImage("assets/logo.png",),height: 150,),

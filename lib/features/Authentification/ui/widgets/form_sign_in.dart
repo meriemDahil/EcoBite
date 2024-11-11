@@ -55,15 +55,15 @@ class FormSignIn extends StatelessWidget {
                           ),
                         ),
                    ),
-                  //SizedBox(height: MediaQuery.of(context).size.height /50),
+                
                   RoundedButton(
                     label: 'Sign In',
                     color: AppColor.primary,
                     onTap: () {
-                      context.read<AuthCubit>().signIn(); // Trigger signIn in AuthCubit
+                      context.read<AuthCubit>().signIn(); 
                     },
                   ),
-                  //SizedBox(height: MediaQuery.of(context).size.height / 40),
+                 
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(

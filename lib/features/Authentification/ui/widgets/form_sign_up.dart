@@ -18,7 +18,6 @@ class FormSignUp extends StatelessWidget {
         child: Form(
           key:formKey,
           child: Column(
-            //mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('Sign Up here', style: TextStyle(fontSize: 26,fontWeight: FontWeight.w900,color: Colors.black),),

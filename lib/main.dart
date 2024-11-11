@@ -32,8 +32,8 @@ class MyApp extends StatelessWidget {
       routes: {
         //  "/": (context) => WelcomePage(),
         "/signin": (context) => SignIn(),
-        "/home": (context) => Home(),
-        "/tabbar": (context) => Tabbar(),
+        //"/home": (context) => Home(user: null,),
+       // "/tabbar": (context) => Tabbar(),
         "/signup":(context)=> SignUpPage(), 
         "/welcomepage":(context)=>WelcomePage()
       },

@@ -53,7 +53,7 @@ class SignUpPage extends StatelessWidget {
             ));
            Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => Home()),
+              MaterialPageRoute(builder: (context) => Home(user: state.user)),
               (route) => false,
             );
           }

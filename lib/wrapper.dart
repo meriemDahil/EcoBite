@@ -1,5 +1,4 @@
 import 'package:eco_bite/features/Authentification/logic/cubit/auth_cubit.dart';
-import 'package:eco_bite/features/Authentification/ui/sign_up.dart';
 import 'package:eco_bite/features/home/ui/home.dart';
 import 'package:eco_bite/features/splashScreen/splash_screen.dart';
 import 'package:eco_bite/features/splashScreen/welcome_page.dart';
@@ -16,7 +15,7 @@ class AuthWrapper extends StatelessWidget {
         return state.when(
           initial: () => SplashScreen(),
           loading: () => const Center(child: CircularProgressIndicator()),
-          success: (user) => Home(),
+          success: (user) => Home(user:user),
           error: (message) => WelcomePage(),
         );
       },
