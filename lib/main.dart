@@ -4,7 +4,6 @@ import 'package:eco_bite/features/Authentification/ui/sign_up.dart';
 import 'package:eco_bite/features/home/ui/home.dart';
 import 'package:eco_bite/features/home/ui/tab_bar.dart';
 import 'package:eco_bite/features/Authentification/ui/sign_in.dart';
-import 'package:eco_bite/features/splashScreen/splash_screen.dart';
 import 'package:eco_bite/features/splashScreen/welcome_page.dart';
 import 'package:eco_bite/firebase_options.dart';
 import 'package:eco_bite/wrapper.dart';
@@ -32,7 +31,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       routes: {
         //  "/": (context) => WelcomePage(),
-        "/signIp": (context) => SignIn(),
+        "/signin": (context) => SignIn(),
         "/home": (context) => Home(),
         "/tabbar": (context) => Tabbar(),
         "/signup":(context)=> SignUpPage(), 

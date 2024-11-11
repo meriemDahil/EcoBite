@@ -6,25 +6,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FormSignIn extends StatelessWidget {
-  const FormSignIn({super.key,});
+  final GlobalKey<FormState> formKey;
+   FormSignIn({super.key, required this.formKey,});
 
   @override
   Widget build(BuildContext context) {
     return Form(
-              key: context.read<AuthCubit>().formKey,
+              key:
+              formKey,
               child: ListView(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 children: [
                   const SizedBox(height: 40),
-                  const Text(
-                    'Sign in here',
-                    style: TextStyle(
-                      color: AppColor.primary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24,
-                    ),
-                  ),
-                  const SizedBox(height: 40),
+                  const Text('Login here', style: TextStyle(fontSize: 26,fontWeight: FontWeight.w900,color: Colors.black),),
+                  SizedBox(height: 16,),
+                  
                   LabeledTextField(
                     hintText: 'email',
                     label: 'email',
@@ -42,7 +38,24 @@ class FormSignIn extends StatelessWidget {
                         ? 'Please enter a password'
                         : null,
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height / 40),
+                   Padding(
+                     padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16),
+                     child: GestureDetector(
+                          onTap: () {
+                               Navigator.pushReplacementNamed(context, '/signup'); 
+                          },
+                          child: const Text(
+                            'Forget password?',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.normal,
+                              fontSize: 17,
+                            ),
+                            textAlign: TextAlign.end,
+                          ),
+                        ),
+                   ),
+                  //SizedBox(height: MediaQuery.of(context).size.height /50),
                   RoundedButton(
                     label: 'Sign In',
                     color: AppColor.primary,
@@ -50,30 +63,33 @@ class FormSignIn extends StatelessWidget {
                       context.read<AuthCubit>().signIn(); // Trigger signIn in AuthCubit
                     },
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height / 40),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        'You don\'t have an account?  ',
-                        style: TextStyle(color: Colors.black, fontSize: 16),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, '/signup'); 
-                        },
-                        child: const Text(
-                          'Sign up here',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 17,
-                            decoration: TextDecoration.underline,
-                            decorationColor: Colors.white,
+                  //SizedBox(height: MediaQuery.of(context).size.height / 40),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'You don\'t have an account?  ',
+                          style: TextStyle(color: Colors.black, fontSize: 16),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                             Navigator.pushReplacementNamed(context, '/signup'); 
+                          },
+                          child: const Text(
+                            'Sign up here',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17,
+                              
+                              
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),

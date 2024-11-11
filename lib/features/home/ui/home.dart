@@ -32,7 +32,25 @@ class _HomeState extends State<Home> {
           Padding(
             padding: EdgeInsets.all(8.0),
             child: 
-            GestureDetector(child: CircleAvatar(backgroundImage: AssetImage("assets/profile.jpg"), radius: 30,),onTap: context.read<AuthCubit>().signOut,),
+          BlocListener<AuthCubit, AuthState>(
+  listener: (context, state) {
+    if (state is Success) {
+      Navigator.pushReplacementNamed(context, '/signin');
+    } else if (state is Error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(state.error)),
+      );
+    }
+  },
+  child: GestureDetector(
+    child: CircleAvatar(
+      backgroundImage: AssetImage("assets/profile.jpg"),
+      radius: 30,
+    ),
+    onTap: () => context.read<AuthCubit>().signOut(),
+  ),
+),
+
           )
         ],
         centerTitle: true,

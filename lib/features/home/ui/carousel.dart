@@ -15,7 +15,11 @@ class CarouselSlide extends StatelessWidget {
       10,
       (index) => Restaurant(
         name: 'Placeholder ${index + 1}', 
-        image: '',  
+        imageUrl: '', 
+        id: '',
+        address: '',
+        openTime: '',
+        closeTime: '',  
       ),
     );
 
@@ -45,12 +49,12 @@ class CarouselSlide extends StatelessWidget {
               child: Stack(
                 children: [
                   Positioned.fill(
-                    child: restaurant.image.isNotEmpty
+                    child: restaurant.imageUrl.isNotEmpty
                         ? Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
                               image: DecorationImage(
-                                image: NetworkImage(restaurant.image),
+                                image: NetworkImage(restaurant.imageUrl),
                                 fit: BoxFit.cover,
                               ),
                             ),

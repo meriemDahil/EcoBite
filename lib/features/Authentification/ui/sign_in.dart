@@ -38,11 +38,26 @@ class SignIn extends StatelessWidget {
               width: 100,
             ),
           ),
-          BlocListener<AuthCubit, AuthState>(
-            listener: (context, state) {
-              state.whenOrNull(
-                loading: () {
-                  // Show a loading indicator while signing in
+          BlocConsumer<AuthCubit, AuthState>(
+        listener: (context, state) {
+          if (state is Error) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(state.error),
+              backgroundColor: Colors.red,
+            ));
+          }
+          if (state is Success) {
+            ScaffoldMessenger.of(context).showSnackBar( SnackBar(
+              content: Text('Login successful! ${state.user?.username}'),
+              backgroundColor: Colors.green,
+            ));
+           Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => Home()),
+              (route) => false,
+            );
+          }
+          if (state is Loading){
                   showDialog(
                     context: context,
                     barrierDismissible: false,
@@ -52,26 +67,12 @@ class SignIn extends StatelessWidget {
                       ),
                     ),
                   );
-                },
-                success: (_) {
-                  // Navigate to the Home screen when sign-in is succe
-                   Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => Home()),
-                    (route) => false,
-                   );   
-                },
-                error: (error) {
-                  // Dismiss the loading indicator and show error message
-                  Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(error)),
-                  );
-                },
-              );
-            },
-            child: FormSignIn(),
-          ),
+         }
+        },  
+        builder: (context, state) {
+          return FormSignIn(formKey: context.read<AuthCubit>().formKey);
+        },
+  ),
         ],
       ),
     );

@@ -47,8 +47,8 @@ class SignUpPage extends StatelessWidget {
             ));
           }
           if (state is Success) {
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-              content: Text('Sign up successful!'),
+            ScaffoldMessenger.of(context).showSnackBar( SnackBar(
+              content: Text('Sign up successful! ${state.user?.username}'),
               backgroundColor: Colors.green,
             ));
            Navigator.pushAndRemoveUntil(
@@ -66,7 +66,7 @@ class SignUpPage extends StatelessWidget {
          }
         },  
         builder: (context, state) {
-          return FormSignUp();
+          return FormSignUp(formKey: context.read<AuthCubit>().formKeySignUp);
         },
   ),
 ]

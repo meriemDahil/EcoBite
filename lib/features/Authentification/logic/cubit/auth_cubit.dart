@@ -24,6 +24,12 @@ class AuthCubit extends Cubit<AuthState> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final GlobalKey<FormState> formKeySignUp = GlobalKey<FormState>();
   static const String AUTH_STATUS_KEY = 'auth_status';
+  void clearControllers() {
+    emailController.clear();
+    passwordController.clear();
+    addressController.clear();
+    phoneController.clear();
+  }
 
   AuthCubit(this._authRepository) : super(const AuthState.initial()){
       checkAuthStatus();
@@ -45,6 +51,7 @@ class AuthCubit extends Cubit<AuthState> {
     final isAuthenticated = prefs.getBool(AUTH_STATUS_KEY) ?? false;
     
     if (isAuthenticated) {
+      
       emit(AuthState.success()); 
     }
   }
@@ -65,7 +72,7 @@ class AuthCubit extends Cubit<AuthState> {
         if (user != null) {
            final prefs = await SharedPreferences.getInstance();
            await prefs.setBool(AUTH_STATUS_KEY, true);
-      
+          clearControllers();
           emit(AuthState.success(user: user as UserModel?));
         } else {
           emit(const AuthState.error('Sign up failed.'));
@@ -87,7 +94,9 @@ class AuthCubit extends Cubit<AuthState> {
         if (user != null) {
            final prefs = await SharedPreferences.getInstance();
           await prefs.setBool(AUTH_STATUS_KEY, true);
+          clearControllers();
           emit(AuthState.success(user: user as UserModel?));
+
         } else {
           
           emit(const AuthState.error('Sign in failed.'));
@@ -104,7 +113,9 @@ class AuthCubit extends Cubit<AuthState> {
       await _authRepository.signOut();
        final prefs = await SharedPreferences.getInstance();
        await prefs.setBool(AUTH_STATUS_KEY, false);
-      emit(const AuthState.success());  // Emit success without a user after signing out
+       
+      emit(const AuthState.success()); 
+       
     } catch (e) {
       emit(AuthState.error('Error signing out: $e'));
     }

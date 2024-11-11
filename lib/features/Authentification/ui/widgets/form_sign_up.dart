@@ -6,7 +6,8 @@ import 'package:eco_bite/features/Authentification/logic/cubit/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 class FormSignUp extends StatelessWidget {
-  const FormSignUp({super.key});
+   final GlobalKey<FormState> formKey;
+   FormSignUp({super.key, required this.formKey});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,7 @@ class FormSignUp extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 130),
         child: Form(
-          key: context.read<AuthCubit>().formKeySignUp,
+          key:formKey,
           child: Column(
             //mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,6 +80,33 @@ class FormSignUp extends StatelessWidget {
                   context.read<AuthCubit>().signUp(UserRole.CUSTOMER);
                 },
               ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        const Text(
+                          'I already have an account, ',
+                          style: TextStyle(color: Colors.black, fontSize: 16),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushReplacementNamed(context, '/signin'); 
+                          },
+                          child: const Text(
+                            'Login here',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17,
+                              
+                              
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                ),
             ],
           ),
         ),
