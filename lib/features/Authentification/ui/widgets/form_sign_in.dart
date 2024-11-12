@@ -1,11 +1,7 @@
-import 'dart:ffi';
-
 import 'package:eco_bite/core/app_color.dart';
 import 'package:eco_bite/core/button.dart';
 import 'package:eco_bite/core/labeled_textfield.dart';
-import 'package:eco_bite/core/size.dart';
 import 'package:eco_bite/features/Authentification/logic/cubit/auth_cubit.dart';
-import 'package:eco_bite/features/Authentification/ui/sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -42,81 +38,119 @@ class FormSignIn extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16),
-            child: GestureDetector(
-              onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return BlocConsumer<AuthCubit, AuthState>(
-                      listener: (context, state) {
-                        if (state is PasswordResteSuccess) {
-                          // Close the dialog immediately
-                          Navigator.pop(context);
-                          // Then show success message
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Password reset link sent successfully! Please check your email.')),
-                          );
-                        } else if (state is Error) {
-                          // Close the dialog in case of error
-                          Navigator.pop(context);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(state.error)),
-                          );
-                        }
-                      },
-                      builder: (context, state) {
-                        if (state is Loading) {
-                          return Center(child: CircularProgressIndicator());
-                        }
-                        return AlertDialog(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25.0),
-                          ),
-                          backgroundColor: Colors.white,
-                          content: Container(
-                            padding: EdgeInsets.all(10.0),
-                            constraints: BoxConstraints(
-                              maxWidth: MediaQuery.of(context).size.width / 1.3,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text('Enter your email, and we will send you a password reset link.'),
-                                SizedBox(height: MediaQuery.of(context).size.height / 70),
-                                LabeledTextField(
-                                  label: "Email",
-                                  hintText: "Email",
-                                  textEditingController: context.read<AuthCubit>().emailController,
-                                ),
-                                RoundedButton(
-                                  label: "Send Reset Link",
-                                  onTap: () async {
-                                    // Close the dialog immediately when the button is pressed
-                                    Navigator.pop(context);
-                                    // Perform the password reset action
-                                    await context.read<AuthCubit>().passwordReset();
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    );
-                  },
-                );
-              },
-              child: const Text(
-                'Forget password?',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.normal,
-                  fontSize: 17,
+            child:GestureDetector(
+  onTap: () {
+    // Clear the email controller before showing dialog
+    context.read<AuthCubit>().emailController.clear();
+    showDialog(
+      context: context,
+      barrierDismissible: false, // Prevent closing by tapping outside
+      builder: (BuildContext context) {
+        return BlocConsumer<AuthCubit, AuthState>(
+          listener: (context, state) {
+            if (state is PasswordResteSuccess) {
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Password reset link sent successfully! Please check your email.'),
+                  backgroundColor: Colors.green,
                 ),
-                textAlign: TextAlign.end,
+              );
+            } else if (state is Error) {
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.error),
+                  backgroundColor: Colors.red,
+                ),
+              );
+            }
+          },
+          builder: (context, state) {
+            if (state is Loading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25.0),
               ),
-            ),
+              backgroundColor: Colors.white,
+              content: Container(
+                padding: const EdgeInsets.all(10.0),
+                constraints: BoxConstraints(
+                  maxWidth: MediaQuery.of(context).size.width / 1.3,
+                ),
+                child: Form(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Text(
+                        'Reset Password',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      const Text(
+                        'Enter your email, and we will send you a password reset link.',
+                      ),
+                      SizedBox(height: MediaQuery.of(context).size.height / 70),
+                      LabeledTextField(
+                        label: "Email",
+                        hintText: "Enter your email",
+                        textEditingController: context.read<AuthCubit>().emailController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your email';
+                          }
+                          if (!value.contains('@') || !value.contains('.')) {
+                            return 'Please enter a valid email';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 16),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text('Cancel'),
+                          ),
+                          const SizedBox(width: 8),
+                          RoundedButton(
+                            label: "Send Reset Link",
+                            onTap: () async{ 
+                              await context.read<AuthCubit>().passwordReset();
+                             Navigator.pop(context);}
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  },
+  child: const Text(
+    'Forget password?',
+    style: TextStyle(
+      color: Colors.black,
+      fontWeight: FontWeight.normal,
+      fontSize: 17,
+    ),
+    textAlign: TextAlign.end,
+  ),
+),
+
           ),
           RoundedButton(
             label: 'Sign In',

@@ -19,6 +19,7 @@ abstract class AuthRepository {
   Future<void> signOut();
   Future<void> passwordReset(String mail);
   
+  
 
   
 }
@@ -116,4 +117,5 @@ class FirebaseAuthRepository implements AuthRepository {
       print(e);
     }
   }
+
 }

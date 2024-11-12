@@ -1,6 +1,5 @@
 import 'package:eco_bite/core/app_color.dart';
 import 'package:eco_bite/core/button.dart';
-import 'package:eco_bite/core/enum.dart';
 import 'package:eco_bite/core/labeled_textfield.dart';
 import 'package:eco_bite/features/Authentification/logic/cubit/auth_cubit.dart';
 import 'package:flutter/material.dart';

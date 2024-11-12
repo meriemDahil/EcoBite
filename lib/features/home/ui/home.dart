@@ -61,7 +61,7 @@ class _HomeState extends State<Home> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-              Text(widget.user?.username ?? 'No username available'),
+              Text(widget.user!.username),
                 Icon( Icons.arrow_drop_down_outlined)
               ],
             ),

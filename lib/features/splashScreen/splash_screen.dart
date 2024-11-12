@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:eco_bite/core/app_color.dart';
-import 'package:eco_bite/features/splashScreen/welcome_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 

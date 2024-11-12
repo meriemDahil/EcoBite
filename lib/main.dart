@@ -1,8 +1,6 @@
 import 'package:eco_bite/features/Authentification/logic/cubit/auth_cubit.dart';
 import 'package:eco_bite/features/Authentification/repo/auth_repo.dart';
 import 'package:eco_bite/features/Authentification/ui/sign_up.dart';
-import 'package:eco_bite/features/home/ui/home.dart';
-import 'package:eco_bite/features/home/ui/tab_bar.dart';
 import 'package:eco_bite/features/Authentification/ui/sign_in.dart';
 import 'package:eco_bite/features/splashScreen/welcome_page.dart';
 import 'package:eco_bite/firebase_options.dart';
