@@ -16,3 +16,4 @@ extension UserRoleExtension on UserRole {
     }
   }
 }
+

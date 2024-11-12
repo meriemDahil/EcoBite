@@ -1,6 +1,9 @@
+import 'package:eco_bite/core/enum_message_type.dart';
+import 'package:eco_bite/core/flash_utils.dart';
 import 'package:eco_bite/features/Authentification/logic/cubit/auth_cubit.dart';
 import 'package:eco_bite/features/Authentification/ui/widgets/form_sign_in.dart';
 import 'package:eco_bite/features/home/ui/home.dart';
+import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -45,12 +48,21 @@ class SignIn extends StatelessWidget {
               content: Text(state.error),
               backgroundColor: Colors.red,
             ));
+            Navigator.pop(context);
           }
           if (state is Success) {
-            ScaffoldMessenger.of(context).showSnackBar( SnackBar(
-              content: Text('Login successful! ${state.user?.username}'),
-              backgroundColor: Colors.green,
-            ));
+             FlashUtils.showCustomFlash(
+                          context: context,
+                          message: 'Login successful! ${state.user?.username}',
+                          type: MessageType.success,
+                          position: FlashPosition.bottom
+                          
+
+                        );
+            // ScaffoldMessenger.of(context).showSnackBar( SnackBar(
+            //   content: Text('Login successful! ${state.user?.username}'),
+            //   backgroundColor: Colors.green,
+            // ));
            Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => Home(user: state.user,)),
@@ -70,7 +82,12 @@ class SignIn extends StatelessWidget {
          }
         },  
         builder: (context, state) {
-          return FormSignIn(formKey: context.read<AuthCubit>().formKey);
+          return Center( // This will center the form on the screen
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0), // Add padding if needed
+                  child: FormSignIn(formKey: context.read<AuthCubit>().formKey),
+                ),
+              );
         },
   ),
         ],

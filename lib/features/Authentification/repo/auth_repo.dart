@@ -1,5 +1,5 @@
 
-import 'package:eco_bite/core/enum.dart';
+import 'package:eco_bite/core/enum_role.dart';
 import 'package:eco_bite/features/Authentification/data/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

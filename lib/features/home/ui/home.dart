@@ -2,6 +2,7 @@ import 'package:eco_bite/core/app_color.dart';
 import 'package:eco_bite/core/search.dart';
 import 'package:eco_bite/features/Authentification/data/user_model.dart';
 import 'package:eco_bite/features/Authentification/logic/cubit/auth_cubit.dart';
+import 'package:eco_bite/features/Authentification/ui/sign_in.dart';
 import 'package:eco_bite/features/home/ui/carousel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -49,7 +50,14 @@ class _HomeState extends State<Home> {
       backgroundImage: AssetImage("assets/profile.jpg"),
       radius: 30,
     ),
-    onTap: () => context.read<AuthCubit>().signOut(),
+    onTap: () async{
+       context.read<AuthCubit>().signOut();
+        Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => SignIn()),
+              (route) => false,
+            );}
+
   ),
 ),
 

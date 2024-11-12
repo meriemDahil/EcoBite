@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
-import 'package:eco_bite/core/enum.dart';
+import 'package:eco_bite/core/enum_role.dart';
 import 'package:eco_bite/features/Authentification/data/user_model.dart';
 import 'package:eco_bite/features/Authentification/repo/auth_repo.dart';
 import 'package:flutter/material.dart';
