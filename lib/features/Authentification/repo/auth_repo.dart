@@ -17,6 +17,8 @@ abstract class AuthRepository {
   });
   Future<UserModel?> signIn({required String email, required String password});
   Future<void> signOut();
+  Future<void> passwordReset(String mail);
+  
 
   
 }
@@ -46,7 +48,7 @@ class FirebaseAuthRepository implements AuthRepository {
       await _firestore.collection('users').doc(userId).set({
         'username': username,
         'email': email,
-        'role': role.toString(),
+        'role': role.name,
         'address': address,
         'phone': phone,
         'image': image,
@@ -104,5 +106,14 @@ class FirebaseAuthRepository implements AuthRepository {
   @override
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
+  }
+
+  Future<void> passwordReset(String mail) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: mail.trim());
+     
+    }on FirebaseAuthException catch(e){
+      print(e);
+    }
   }
 }

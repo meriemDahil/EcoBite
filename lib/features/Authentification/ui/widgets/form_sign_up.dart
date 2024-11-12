@@ -76,7 +76,7 @@ class FormSignUp extends StatelessWidget {
                 label: 'Sign In',
                 color: AppColor.primary,
                 onTap: () {
-                  context.read<AuthCubit>().signUp(UserRole.CUSTOMER);
+                  context.read<AuthCubit>().signUp();
                 },
               ),
                 Padding(

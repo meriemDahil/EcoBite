@@ -55,7 +55,7 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future<void> signUp(UserRole role) async {
+  Future<void> signUp() async {
     if (formKeySignUp.currentState?.validate() ?? false) {
       emit(const AuthState.loading());
       try {
@@ -117,6 +117,16 @@ class AuthCubit extends Cubit<AuthState> {
        
     } catch (e) {
       emit(AuthState.error('Error signing out: $e'));
+    }
+  }
+
+  Future<void> passwordReset()async {
+     emit(const AuthState.loading());
+     try{
+      await _authRepository.passwordReset(emailController.text);
+      emit(const AuthState.passwordResteSuccess()); 
+     }catch (e) {
+      emit(AuthState.error('Error reseting password: $e'));
     }
   }
 }

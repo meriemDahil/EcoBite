@@ -12,11 +12,13 @@ class AuthWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AuthCubit, AuthState>(
       builder: (context, state) {
-        return state.when(
+        return state.maybeWhen(
           initial: () => SplashScreen(),
           loading: () => const Center(child: CircularProgressIndicator()),
           success: (user) => Home(user:user),
           error: (message) => WelcomePage(),
+          orElse: ()=> Center(child: CircularProgressIndicator())
+        
         );
       },
     );
