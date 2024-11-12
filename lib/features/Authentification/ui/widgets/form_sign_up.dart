@@ -72,10 +72,10 @@ class FormSignUp extends StatelessWidget {
               ),
               SizedBox(height: MediaQuery.of(context).size.height / 40),
               RoundedButton(
-                label: 'Sign In',
+                label: 'Sign up',
                 color: AppColor.primary,
-                onTap: () {
-                  context.read<AuthCubit>().signUp();
+                onTap: ()async {
+                 await context.read<AuthCubit>().signUp();
                 },
               ),
                 Padding(

@@ -82,9 +82,9 @@ class SignIn extends StatelessWidget {
          }
         },  
         builder: (context, state) {
-          return Center( // This will center the form on the screen
+          return Center(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0), // Add padding if needed
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0), 
                   child: FormSignIn(formKey: context.read<AuthCubit>().formKey),
                 ),
               );

@@ -164,9 +164,9 @@ class FormSignIn extends StatelessWidget {
           RoundedButton(
             label: 'Sign In',
             color: AppColor.primary,
-            onTap: () {
+            onTap: () async{
               if (formKey.currentState!.validate()) {
-                context.read<AuthCubit>().signIn();
+              await  context.read<AuthCubit>().signIn();
               }
             },
           ),
