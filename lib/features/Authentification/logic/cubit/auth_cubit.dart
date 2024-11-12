@@ -17,6 +17,7 @@ class AuthCubit extends Cubit<AuthState> {
   // TextEditingControllers for input fields
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
@@ -31,6 +32,7 @@ class AuthCubit extends Cubit<AuthState> {
     passwordController.clear();
     addressController.clear();
     phoneController.clear();
+    confirmPasswordController.clear();
   }
 
   AuthCubit(this._authRepository) : super(const AuthState.initial()){
@@ -43,6 +45,7 @@ class AuthCubit extends Cubit<AuthState> {
     passwordController.dispose();
     usernameController.dispose();
     addressController.dispose();
+    confirmPasswordController.dispose();
     phoneController.dispose();
     imageController.dispose();
     return super.close();

@@ -18,15 +18,16 @@ class FormSignIn extends StatelessWidget {
     return Form(
       key: formKey,
       child: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+        
         child:Column(
           //mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const SizedBox(height: 40),
+         
           const Text(
             'Login here',
-            style: TextStyle(fontSize: 26, fontWeight: FontWeight.w900, color: Colors.black),
+            style: TextStyle(fontSize: 26, fontWeight: FontWeight.w900, color: AppColor.primary),
           ),
           const SizedBox(height: 16),
           LabeledTextField(
@@ -42,11 +43,11 @@ class FormSignIn extends StatelessWidget {
             textEditingController: context.read<AuthCubit>().passwordController,
             validator: (value) => value == null || value.isEmpty ? 'Please enter a password' : null,
           ),
+         
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16),
             child:GestureDetector(
             onTap: () {
-           
               context.read<AuthCubit>().emailController.clear();
               showDialog(
                 context: context,
@@ -108,7 +109,7 @@ class FormSignIn extends StatelessWidget {
                                 SizedBox(height: MediaQuery.of(context).size.height / 70),
                                 LabeledTextField(
                                   label: "Email",
-                                  hintText: "Enter your email",
+                                  hintText: "email",
                                   textEditingController: context.read<AuthCubit>().emailController,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
@@ -130,7 +131,7 @@ class FormSignIn extends StatelessWidget {
                                     ),
                                     const SizedBox(width: 8),
                                     RoundedButton(
-                                      label: "Send Reset Link",
+                                      label: "Send",
                                       onTap: () async{ 
                                         await context.read<AuthCubit>().passwordReset();
                                       Navigator.pop(context);}

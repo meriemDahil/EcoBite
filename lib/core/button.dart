@@ -30,7 +30,9 @@ class RoundedButton extends StatelessWidget {
       borderRadius: BorderRadius.circular(8),
       clipBehavior: Clip.antiAlias,
       color: Colors.transparent,
+      
       child: InkWell(
+        
         onTap: onTap,
         child: Container(
           alignment: Alignment.center,
@@ -52,6 +54,7 @@ class RoundedButton extends StatelessWidget {
           ),
           padding: EdgeInsets.symmetric(vertical: AppSize.shortestSide * 0.04),
           child: Row(
+            
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -65,12 +68,15 @@ class RoundedButton extends StatelessWidget {
                     )
                   : const SizedBox.shrink(),
               icon != null ? AppSize.spaceXSmall : const SizedBox.shrink(),
-              Text(
-                label,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge!
-                    .copyWith(color: labelColor, fontWeight: FontWeight.w700),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  label,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge!
+                      .copyWith(color: labelColor, fontWeight: FontWeight.w700),
+                ),
               ),
             ],
           ),

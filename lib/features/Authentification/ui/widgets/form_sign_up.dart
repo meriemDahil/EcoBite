@@ -47,6 +47,21 @@ class FormSignUp extends StatelessWidget {
               ),
               SizedBox(height: MediaQuery.of(context).size.height / 40),
               LabeledTextField(
+                hintText: 'Confirm password',
+                label: 'Confirm password',
+                textEditingController: context.read<AuthCubit>().confirmPasswordController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Confirm password is required';
+                  }
+                  if (value != context.read<AuthCubit>().passwordController.text) {
+                    return 'Passwords do not match';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height / 40),
+              LabeledTextField(
                 textEditingController: context.read<AuthCubit>().usernameController,
                 label: 'Username',
                 hintText: 'Enter your username',

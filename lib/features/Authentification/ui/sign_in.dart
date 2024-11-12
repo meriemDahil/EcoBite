@@ -1,3 +1,4 @@
+import 'package:eco_bite/core/app_color.dart';
 import 'package:eco_bite/core/enum_message_type.dart';
 import 'package:eco_bite/core/flash_utils.dart';
 import 'package:eco_bite/features/Authentification/logic/cubit/auth_cubit.dart';
@@ -82,12 +83,40 @@ class SignIn extends StatelessWidget {
          }
         },  
         builder: (context, state) {
-          return Center(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0), 
-                  child: FormSignIn(formKey: context.read<AuthCubit>().formKey),
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              
+              mainAxisAlignment: MainAxisAlignment.center,
+              //crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                 Row(
+              children: [
+                Text(
+                  'Welcome To ',
+                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.w900, color: Colors.black),
                 ),
-              );
+                Text(
+              'EcoBite',
+              style: TextStyle(fontSize: 26, fontWeight: FontWeight.w900, color: AppColor.primary),
+            ),
+              ],
+            ),
+            Text(
+                  'Here’s your first step in the journey to reduce food waste. ',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black),
+                ),
+                     
+             
+                Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0), 
+                        child: FormSignIn(formKey: context.read<AuthCubit>().formKey),
+                      ),
+                    ),
+              ],
+            ),
+          );
         },
   ),
         ],
