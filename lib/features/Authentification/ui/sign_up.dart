@@ -4,6 +4,7 @@ import 'package:eco_bite/features/home/ui/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+
 class SignUpPage extends StatelessWidget {
   const SignUpPage({Key? key}) : super(key: key);
 
@@ -52,27 +53,26 @@ class SignUpPage extends StatelessWidget {
                 ));
                 Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => Home(user: state.user)),
+                  MaterialPageRoute(
+                      builder: (context) => Home(user: state.user)),
                   (route) => false,
                 );
               }
-              if (state is Loading){
-                  showDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    builder: (context) => Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.deepOrange,
-                      ),
+              if (state is Loading) {
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (context) => Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.deepOrange,
                     ),
-                  );
-         }
+                  ),
+                );
+              }
             },
-            
             builder: (context, state) {
-             
-                return FormSignUp(formKey: context.read<AuthCubit>().formKeySignUp);
-              
+              return FormSignUp(
+                  formKey: context.read<AuthCubit>().formKeySignUp);
             },
           ),
         ],

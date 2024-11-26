@@ -16,6 +16,7 @@ _$OfferModelImpl _$$OfferModelImplFromJson(Map<String, dynamic> json) =>
       restaurant:
           RestaurantModel.fromJson(json['restaurant'] as Map<String, dynamic>),
       user: UserModel.fromJson(json['user'] as Map<String, dynamic>),
+      quantity: (json['quantity'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$OfferModelImplToJson(_$OfferModelImpl instance) =>
@@ -27,4 +28,5 @@ Map<String, dynamic> _$$OfferModelImplToJson(_$OfferModelImpl instance) =>
       'expiryDate': instance.expiryDate.toIso8601String(),
       'restaurant': instance.restaurant,
       'user': instance.user,
+      'quantity': instance.quantity,
     };

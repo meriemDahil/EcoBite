@@ -15,20 +15,21 @@ class AuthWrapper extends StatelessWidget {
     return BlocBuilder<AuthCubit, AuthState>(
       builder: (context, state) {
         return state.maybeWhen(
-          initial: () => SplashScreen(),
-          loading: () => const Center(child: CircularProgressIndicator()),
-          success: (user)
-          {
-            // print(user?.role.name);
-            // if(user?.role.name == 'RESTAURANT_OWNER')
-            // return AddOffer(user: user,);
-            // else
-             return Home(user: user,);      
-          },
-          error: (message) => WelcomePage(),
-          orElse: ()=> Center(child: CircularProgressIndicator())
-        
-        );
+            initial: () => SplashScreen(),
+            loading: () => const Center(child: CircularProgressIndicator()),
+            success: (user) {
+              print(user?.role.name);
+              if (user?.role.name == 'RESTAURANT_OWNER')
+                return AddOffer(
+                  user: user,
+                );
+              else
+                return Home(
+                  user: user,
+                );
+            },
+            error: (message) => WelcomePage(),
+            orElse: () => Center(child: CircularProgressIndicator()));
       },
     );
   }

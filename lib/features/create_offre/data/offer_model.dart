@@ -15,6 +15,7 @@ class OfferModel with _$OfferModel {
     required DateTime expiryDate,
     required RestaurantModel restaurant, 
     required UserModel user, 
+    required int quantity,
   }) = _OfferModel;
 
   factory OfferModel.fromJson(Map<String, dynamic> json) => _$OfferModelFromJson(json);

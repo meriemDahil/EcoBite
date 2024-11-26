@@ -20,6 +20,7 @@ Future<OfferModel> fetchOffer(String offerId) async {
     expiryDate: DateTime.parse(offerData['expiryDate']),
     restaurant: RestaurantModel.fromJson(restaurantDoc.data()!),
     user: UserModel.fromJson(userDoc.data()!),
+    quantity: offerData['quantity']
   );
 }
  Future<List<Map<String, dynamic>>> fetchOffers() async {
@@ -31,7 +32,10 @@ Future<OfferModel> fetchOffer(String offerId) async {
         'description': data['description'],
         'mealName': data['mealName'],
         'restaurantId': data['restaurantId'],
-        'imagePath': data['imagePath'], // Optional: include image path if needed
+        'imagePath': data['imagePath'], 
+        'quantity':data['quantity'],
+        'price':data['price']
+        // Optional: include image path if needed
       };
     }).toList();
   }
