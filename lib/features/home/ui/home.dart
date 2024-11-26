@@ -67,6 +67,7 @@ class _HomeState extends State<Home> {
         ],
         centerTitle: true,
         title: Column(
+         
           children:[
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -123,48 +124,16 @@ class _HomeState extends State<Home> {
             const SizedBox(height: 5,),
             GestureDetector(child: const Row(
               children: [
-                Text("View more", 
+                Text("Découvrir nos partenaires", 
                   style: TextStyle(fontSize: 15,fontWeight: FontWeight.w400,color: AppColor.primary),
                   ),
                 Icon(Icons.arrow_right_alt,color: AppColor.primary,)
               ],
             ),),
-            CarouselSlide(),
-           
-     FutureBuilder<List<RestaurantModel>>(
-  future: RestaurantRepository().getAllRestaurants(),
-  builder: (context, snapshot) {
-    if (snapshot.connectionState == ConnectionState.waiting) {
-      return Center(child: CircularProgressIndicator());
-    } else if (snapshot.hasError) {
-      return Center(child: Text('Error: ${snapshot.error}'));
-    } else if (snapshot.hasData) {
-      final restaurants = snapshot.data!;
-      if (restaurants.isEmpty) {
-        return Center(child: Text('No restaurants found.'));
-      }
-
-      return ListView.builder(
-  shrinkWrap: true, // Makes ListView occupy minimal space
-  physics: NeverScrollableScrollPhysics(), // Prevents nested scrolling conflicts
-  itemCount: restaurants.length,
-  itemBuilder: (context, index) {
-    final restaurant = restaurants[index];
-    return ListTile(
-      title: Text(restaurant.restaurantName),
-      // subtitle: Text('Rating: ${restaurant.rating?.toString() ?? "N/A"}'),
-    );
-  },
-);
-
-    } else {
-      return Center(child: Text('No data available.'));
-    }
-  },
-),
-        
-
-            
+            CarouselSlide(),   
+            Text('Découvrir nos offres pour aujourd’hui ->',
+            style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500,color: AppColor.primary),
+            ),     
         ],
         ),
       ),
