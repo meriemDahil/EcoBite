@@ -13,8 +13,8 @@ class OfferModel with _$OfferModel {
     required String description,
     required double price,
     required DateTime expiryDate,
-    required RestaurantModel restaurant, // Reference to the associated restaurant
-    required UserModel user, // Reference to the user who created the offer
+    required RestaurantModel restaurant, 
+    required UserModel user, 
   }) = _OfferModel;
 
   factory OfferModel.fromJson(Map<String, dynamic> json) => _$OfferModelFromJson(json);

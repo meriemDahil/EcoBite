@@ -22,6 +22,7 @@ class SearchWidget extends StatelessWidget {
       controller: controller,
       onChanged: onChanged,
       decoration: InputDecoration(
+        contentPadding: EdgeInsets.all(8),
         filled: true,
         fillColor: fillColor,
         hintText: hintText,

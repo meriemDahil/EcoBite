@@ -19,10 +19,11 @@ class AuthWrapper extends StatelessWidget {
           loading: () => const Center(child: CircularProgressIndicator()),
           success: (user)
           {
-            print(user?.role.name);
-            if(user?.role.name == 'RESTAURANT_OWNER')
-            return AddOffer(user: user,);
-            else return Home(user: user,);      
+            // print(user?.role.name);
+            // if(user?.role.name == 'RESTAURANT_OWNER')
+            // return AddOffer(user: user,);
+            // else
+             return Home(user: user,);      
           },
           error: (message) => WelcomePage(),
           orElse: ()=> Center(child: CircularProgressIndicator())
