@@ -2,6 +2,7 @@ import 'package:eco_bite/features/Authentification/logic/cubit/auth_cubit.dart';
 import 'package:eco_bite/features/Authentification/repo/auth_repo.dart';
 import 'package:eco_bite/features/Authentification/ui/sign_up.dart';
 import 'package:eco_bite/features/Authentification/ui/sign_in.dart';
+import 'package:eco_bite/features/create_offre/logic/cubit/image_cubit.dart';
 import 'package:eco_bite/features/splashScreen/welcome_page.dart';
 import 'package:eco_bite/firebase_options.dart';
 import 'package:eco_bite/wrapper.dart';
@@ -13,8 +14,15 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
-    BlocProvider(
-      create: (context) => AuthCubit(FirebaseAuthRepository()), 
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => AuthCubit(FirebaseAuthRepository()),
+        ),
+        BlocProvider(
+          create: (context) => ImageCubit(),
+        ),
+      ],
       child: const MyApp(),
     ),
   );
@@ -31,13 +39,12 @@ class MyApp extends StatelessWidget {
         //  "/": (context) => WelcomePage(),
         "/signin": (context) => SignIn(),
         //"/home": (context) => Home(user: null,),
-       // "/tabbar": (context) => Tabbar(),
-        "/signup":(context)=> SignUpPage(), 
-        "/welcomepage":(context)=>WelcomePage()
+        // "/tabbar": (context) => Tabbar(),
+        "/signup": (context) => SignUpPage(),
+        "/welcomepage": (context) => WelcomePage()
       },
       title: 'Eco Bite',
       debugShowCheckedModeBanner: false,
-      
       home: AuthWrapper(),
     );
   }

@@ -60,7 +60,7 @@ Future<void> signUp() async {
           email: emailController.text,
           password: passwordController.text,
           username: usernameController.text,
-          role: UserRole.CUSTOMER,
+          role: UserRole.RESTAURANT_OWNER,
           address: addressController.text,
           phone: phoneController.text,
           image: imageController.text,
@@ -130,8 +130,8 @@ Future<void> signUp() async {
     switch (roleStr) {
       case 'UserRole.CUSTOMER':
         return UserRole.CUSTOMER;
-      case 'UserRole.ADMIN':
-        return UserRole.CUSTOMER;
+      case 'UserRole.RESTAURANT_OWNER':
+        return UserRole.RESTAURANT_OWNER;
       default:
         return UserRole.CUSTOMER;
     }

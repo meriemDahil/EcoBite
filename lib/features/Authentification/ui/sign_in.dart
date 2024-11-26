@@ -4,6 +4,7 @@ import 'package:eco_bite/core/flash_utils.dart';
 import 'package:eco_bite/features/Authentification/logic/cubit/auth_cubit.dart';
 import 'package:eco_bite/features/Authentification/ui/widgets/form_sign_in.dart';
 import 'package:eco_bite/features/home/ui/home.dart';
+import 'package:eco_bite/wrapper.dart';
 import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -64,9 +65,10 @@ class SignIn extends StatelessWidget {
             //   content: Text('Login successful! ${state.user?.username}'),
             //   backgroundColor: Colors.green,
             // ));
+             ();
            Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => Home(user: state.user,)),
+              MaterialPageRoute(builder: (context) => AuthWrapper()),
               (route) => false,
             );
           }

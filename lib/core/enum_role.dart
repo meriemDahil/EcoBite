@@ -10,6 +10,7 @@ extension UserRoleExtension on UserRole {
     switch (this) {
       case UserRole.RESTAURANT_OWNER:
         return 'RESTAURANT_OWNER';
+    
      
       default:
         return 'CUSTOMER';

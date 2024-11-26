@@ -40,6 +40,7 @@ class FormSignIn extends StatelessWidget {
           LabeledTextField(
             hintText: 'password',
             label: 'password',
+            obscureText: true,
             textEditingController: context.read<AuthCubit>().passwordController,
             validator: (value) => value == null || value.isEmpty ? 'Please enter a password' : null,
           ),

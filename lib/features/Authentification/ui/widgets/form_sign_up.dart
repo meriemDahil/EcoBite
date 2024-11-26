@@ -41,6 +41,7 @@ class FormSignUp extends StatelessWidget {
               LabeledTextField(
                 hintText: 'password',
                 label: 'password',
+                obscureText: true,
                 textEditingController: context.read<AuthCubit>().passwordController,
                 validator: (value) =>
                     value == null || value.isEmpty ? 'Password is required' : null,
@@ -49,6 +50,7 @@ class FormSignUp extends StatelessWidget {
               LabeledTextField(
                 hintText: 'Confirm password',
                 label: 'Confirm password',
+                obscureText: true,
                 textEditingController: context.read<AuthCubit>().confirmPasswordController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {

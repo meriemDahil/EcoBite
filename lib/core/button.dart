@@ -11,6 +11,8 @@ class RoundedButton extends StatelessWidget {
   final Function()? onTap;
   final bool hasBorders;
   final double? borderRadius;
+  final double? width;
+  final TextStyle? style;
 
   const RoundedButton({
     super.key,
@@ -22,6 +24,8 @@ class RoundedButton extends StatelessWidget {
     this.hasBorders = false,
     this.borderRadius,
     this.borderColor,
+    this.width,
+    this.style
   });
 
   @override
@@ -35,6 +39,7 @@ class RoundedButton extends StatelessWidget {
         
         onTap: onTap,
         child: Container(
+          width: width,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
@@ -72,10 +77,16 @@ class RoundedButton extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   label,
-                  style: Theme.of(context)
+                  style: style == null? 
+                      Theme.of(context)
                       .textTheme
                       .bodyLarge!
-                      .copyWith(color: labelColor, fontWeight: FontWeight.w700),
+                      .copyWith(color: labelColor, fontWeight: FontWeight.w700):
+                      Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(color: labelColor, fontWeight: FontWeight.w700)
+
                 ),
               ),
             ],
