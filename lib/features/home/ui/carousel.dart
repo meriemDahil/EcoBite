@@ -6,20 +6,20 @@ import 'package:carousel_slider/carousel_slider.dart';
 
 
 class CarouselSlide extends StatelessWidget {
-  final List<Restaurant>? res;  
+  final List<RestaurantModel>? res;  
   CarouselSlide({super.key, this.res});
 
   @override
   Widget build(BuildContext context) {
     final placeholderData = List.generate(
       10,
-      (index) => Restaurant(
-        name: 'Placeholder ${index + 1}', 
-        imageUrl: '', 
+      (index) => RestaurantModel(
+        restaurantName: 'Placeholder ${index + 1}', 
+        image: '', 
         id: '',
         address: '',
-        openTime: '',
-        closeTime: '',  
+        openingTime: '',
+        closingTime: '',  
       ),
     );
 
@@ -43,18 +43,18 @@ class CarouselSlide extends StatelessWidget {
               margin: EdgeInsets.all(8),
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
-                color: Colors.primaries[restaurant.name.hashCode % Colors.primaries.length],  
+                color: Colors.primaries[restaurant.restaurantName.hashCode % Colors.primaries.length],  
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Stack(
                 children: [
                   Positioned.fill(
-                    child: restaurant.imageUrl.isNotEmpty
+                    child: restaurant.image!.isNotEmpty
                         ? Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
                               image: DecorationImage(
-                                image: NetworkImage(restaurant.imageUrl),
+                                image: NetworkImage(restaurant.image!),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -76,7 +76,7 @@ class CarouselSlide extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 8.0),
                       child: Text(
-                        restaurant.name,  // Either placeholder or actual name
+                        restaurant.restaurantName,  // Either placeholder or actual name
                         style: const TextStyle(
                           fontSize: 17,
                           fontWeight: FontWeight.w600,

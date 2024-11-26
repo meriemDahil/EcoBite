@@ -1,27 +1,21 @@
-import 'package:eco_bite/features/Authentification/data/user_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-
 part 'restaurant.freezed.dart';
 part 'restaurant.g.dart';
 
 @freezed
-class Restaurant with _$Restaurant {
-  @JsonSerializable(explicitToJson: true)
-  factory Restaurant({
-    required String id,
-    required String name,
-    UserModel? restaurantOwner,
-    required String address,
-    String? description,
-    required String imageUrl,
-    required String openTime,
-    required String closeTime,
-    String? phone,
-    String? website,
-    Map<String, String>? socialMedia,
-    int? likesCount,
-    int? commentsCount,
-  }) = _Restaurant;
 
-  factory Restaurant.fromJson(Map<String, dynamic> json) => _$RestaurantFromJson(json);
+class RestaurantModel with _$RestaurantModel {
+  const factory RestaurantModel({
+    required String id,                    // Unique restaurant ID (could be linked to the user ID)
+    required String restaurantName,        // Restaurant name
+    String? address,                      // Address of the restaurant
+    String? phone,                        // Restaurant phone number
+    String? image,                        // Restaurant image URL
+    String? openingTime,                  // Opening time (e.g., "09:00 AM")
+    String? closingTime,                  // Closing time (e.g., "10:00 PM")
+    double? rating,                       // Rating of the restaurant
+    List<String>? menuItems,              // List of menu items (optional)
+  }) = _RestaurantModel;
+
+  factory RestaurantModel.fromJson(Map<String, dynamic> json) => _$RestaurantModelFromJson(json);
 }

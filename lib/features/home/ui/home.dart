@@ -3,6 +3,8 @@ import 'package:eco_bite/core/search.dart';
 import 'package:eco_bite/features/Authentification/data/user_model.dart';
 import 'package:eco_bite/features/Authentification/logic/cubit/auth_cubit.dart';
 import 'package:eco_bite/features/Authentification/ui/sign_in.dart';
+import 'package:eco_bite/features/home/data/restaurant.dart';
+import 'package:eco_bite/features/home/repo/restaurant_repo.dart';
 import 'package:eco_bite/features/home/ui/carousel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -129,6 +131,39 @@ class _HomeState extends State<Home> {
             ),),
             CarouselSlide(),
            
+     FutureBuilder<List<RestaurantModel>>(
+  future: RestaurantRepository().getAllRestaurants(),
+  builder: (context, snapshot) {
+    if (snapshot.connectionState == ConnectionState.waiting) {
+      return Center(child: CircularProgressIndicator());
+    } else if (snapshot.hasError) {
+      return Center(child: Text('Error: ${snapshot.error}'));
+    } else if (snapshot.hasData) {
+      final restaurants = snapshot.data!;
+      if (restaurants.isEmpty) {
+        return Center(child: Text('No restaurants found.'));
+      }
+
+      return ListView.builder(
+  shrinkWrap: true, // Makes ListView occupy minimal space
+  physics: NeverScrollableScrollPhysics(), // Prevents nested scrolling conflicts
+  itemCount: restaurants.length,
+  itemBuilder: (context, index) {
+    final restaurant = restaurants[index];
+    return ListTile(
+      title: Text(restaurant.restaurantName),
+      // subtitle: Text('Rating: ${restaurant.rating?.toString() ?? "N/A"}'),
+    );
+  },
+);
+
+    } else {
+      return Center(child: Text('No data available.'));
+    }
+  },
+),
+        
+
             
         ],
         ),
