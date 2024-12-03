@@ -3,6 +3,10 @@ import 'package:eco_bite/features/Authentification/repo/auth_repo.dart';
 import 'package:eco_bite/features/Authentification/ui/sign_up.dart';
 import 'package:eco_bite/features/Authentification/ui/sign_in.dart';
 import 'package:eco_bite/features/create_offre/logic/cubit/image_cubit.dart';
+import 'package:eco_bite/features/home/logic/cubit/restaurant_cubit.dart';
+import 'package:eco_bite/features/home/repo/restaurant_repo.dart';
+import 'package:eco_bite/features/offers/logic/cubit/offers_cubit.dart';
+import 'package:eco_bite/features/offers/repo/offers_repo.dart';
 import 'package:eco_bite/features/splashScreen/welcome_page.dart';
 import 'package:eco_bite/firebase_options.dart';
 import 'package:eco_bite/wrapper.dart';
@@ -22,6 +26,9 @@ void main() async {
         BlocProvider(
           create: (context) => ImageCubit(),
         ),
+        BlocProvider(
+            create: (context) => RestaurantCubit(RestaurantRepository())),
+        BlocProvider(create: (context) => OffersCubit(OffersRepository()))
       ],
       child: const MyApp(),
     ),

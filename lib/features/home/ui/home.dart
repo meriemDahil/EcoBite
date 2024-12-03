@@ -5,10 +5,8 @@ import 'package:eco_bite/core/search.dart';
 import 'package:eco_bite/features/Authentification/data/user_model.dart';
 import 'package:eco_bite/features/Authentification/logic/cubit/auth_cubit.dart';
 import 'package:eco_bite/features/Authentification/ui/sign_in.dart';
-import 'package:eco_bite/features/create_offre/repo/add_offer_repo.dart';
-import 'package:eco_bite/features/home/data/restaurant.dart';
-import 'package:eco_bite/features/home/repo/restaurant_repo.dart';
 import 'package:eco_bite/features/home/ui/carousel.dart';
+import 'package:eco_bite/features/offers/logic/cubit/offers_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -28,6 +26,9 @@ class _HomeState extends State<Home> {
     // TODO: implement initState
     super.initState();
     isSelectedList = List.generate(chips.length, (index) => false);
+      context.read<OffersCubit>().fetchAvailabaleOffers();
+    
+
   }
 
   @override
@@ -156,113 +157,123 @@ class _HomeState extends State<Home> {
                     fontWeight: FontWeight.w500,
                     color: AppColor.primary),
               ),
-              FutureBuilder<List<Map<String, dynamic>>>(
-                future: AddOfferRepo().fetchOffers(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasError) {
-                    return Center(child: Text('Error: ${snapshot.error}'));
-                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return const Center(child: Text('No offers available.'));
-                  }
+              BlocBuilder<OffersCubit, OffersState>(
+                builder: (context, state) {
+                  if (state is OffersLoading) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        color: AppColor.primary,
+                      ),
+                    );
+                  } else if (state is OffersError) {
+                    return Center(
+                      child: Text('Error: ${state.message}'),
+                    );
+                  } else if (state is OffersSuccess) {
+                    final offers = state.offers;
 
-                  final offers = snapshot.data!;
+                    if (offers.isEmpty) {
+                      return Center(child: Text('No offers found.'));
+                    }
 
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: offers.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final offer = offers[index];
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: offers.length,
+                      itemBuilder: (context, index) {
+                        final offer = offers[index];
 
-                      return Card(
-                        color: Colors.white,
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 8, horizontal: 5),
-                        elevation: 4,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // Larger image
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(8),
-                                child: offer['imagePath'] != null
-                                    ? Image.memory(
-                                        base64Decode(offer['imagePath']),
-                                        width: 100, // Adjust size
-                                        height: 100, // Adjust size
-                                        fit: BoxFit.cover,
-                                      )
-                                    : Icon(Icons.fastfood,
-                                        size: 100,
-                                        color: Colors.grey), // Placeholder
-                              ),
-                              const SizedBox(width: 10),
-                              // Text content
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      offer['mealName'] ?? 'No meal name',
-                                      style: const TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 5),
-                                    Text(
-                                      offer['description'] ??
-                                          'No description available',
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.grey,
-                                      ),
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    const SizedBox(height: 10),
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'Quantity: ${offer['quantity'] ?? 'N/A'}',
-                                          style: const TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.black87,
-                                          ),
-                                        ),
-                                        Text(
-                                          'Price: ${offer['price'] ?? 'None'} Da',
-                                          style: const TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.black87,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
+                        return Card(
+                          color: Colors.white,
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 8, horizontal: 5),
+                          elevation: 4,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                        ),
-                      );
-                    },
-                  );
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // Image
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: offer.imagePath.isNotEmpty
+                                      ? Image.memory(
+                                          base64Decode(offer.imagePath),
+                                          width: 100,
+                                          height: 100,
+                                          fit: BoxFit.cover,
+                                        )
+                                      : Icon(
+                                          Icons.fastfood,
+                                          size: 100,
+                                          color: Colors.grey,
+                                        ),
+                                ),
+                                const SizedBox(width: 10),
+                                // Text content
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        offer.title,
+                                        style: const TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 5),
+                                      Text(
+                                        offer.description,
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.grey,
+                                        ),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            'Quantity: ${offer.quantity}',
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.black87,
+                                            ),
+                                          ),
+                                          Text(
+                                            'Price: ${offer.price} Da',
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.black87,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  } else {
+                    return Center(child: Text("Unknown state."));
+                  }
                 },
-              ),
+              )
+
             ],
           ),
         ),

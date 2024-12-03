@@ -4,22 +4,22 @@ import 'package:eco_bite/features/home/data/restaurant.dart';
 class RestaurantRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
- Future<RestaurantModel?> getRestaurantByUserId(String userId) async {
-  try {
-    print('Fetching restaurant for userId: $userId');
-    final doc = await _firestore.collection('restaurants').doc(userId).get();
-    if (doc.exists) {
-      print('Restaurant found: ${doc.data()}');
-      return RestaurantModel.fromJson(doc.data()!);
-    } else {
-      print('No restaurant document found for userId: $userId');
-      return null;
-    }
-  } catch (e) {
-    print('Error fetching restaurant: $e');
-    rethrow;
-  }
-}
+//  Future<RestaurantModel?> getRestaurantByUserId(String userId) async {
+//   try {
+//     print('Fetching restaurant for userId: $userId');
+//     final doc = await _firestore.collection('restaurants').doc(userId).get();
+//     if (doc.exists) {
+//       print('Restaurant found: ${doc.data()}');
+//       return RestaurantModel.fromJson(doc.data()!);
+//     } else {
+//       print('No restaurant document found for userId: $userId');
+//       return null;
+//     }
+//   } catch (e) {
+//     print('Error fetching restaurant: $e');
+//     rethrow;
+//   }
+// }
 
   Future<List<RestaurantModel>> getAllRestaurants() async {
     try {
@@ -41,5 +41,4 @@ class RestaurantRepository {
     }
   }
 
-  // Add other methods for updating, deleting, etc.
 }

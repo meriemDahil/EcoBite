@@ -24,10 +24,12 @@ mixin _$OfferModel {
   String get title => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   double get price => throw _privateConstructorUsedError;
-  DateTime get expiryDate => throw _privateConstructorUsedError;
-  RestaurantModel get restaurant => throw _privateConstructorUsedError;
-  UserModel get user => throw _privateConstructorUsedError;
+  DateTime? get expiryDate => throw _privateConstructorUsedError;
+  String get imagePath => throw _privateConstructorUsedError;
+  RestaurantModel? get restaurant => throw _privateConstructorUsedError;
+  UserModel? get user => throw _privateConstructorUsedError;
   int get quantity => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -46,13 +48,15 @@ abstract class $OfferModelCopyWith<$Res> {
       String title,
       String description,
       double price,
-      DateTime expiryDate,
-      RestaurantModel restaurant,
-      UserModel user,
-      int quantity});
+      DateTime? expiryDate,
+      String imagePath,
+      RestaurantModel? restaurant,
+      UserModel? user,
+      int quantity,
+      DateTime? createdAt});
 
-  $RestaurantModelCopyWith<$Res> get restaurant;
-  $UserModelCopyWith<$Res> get user;
+  $RestaurantModelCopyWith<$Res>? get restaurant;
+  $UserModelCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -72,10 +76,12 @@ class _$OfferModelCopyWithImpl<$Res, $Val extends OfferModel>
     Object? title = null,
     Object? description = null,
     Object? price = null,
-    Object? expiryDate = null,
-    Object? restaurant = null,
-    Object? user = null,
+    Object? expiryDate = freezed,
+    Object? imagePath = null,
+    Object? restaurant = freezed,
+    Object? user = freezed,
     Object? quantity = null,
+    Object? createdAt = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -94,37 +100,53 @@ class _$OfferModelCopyWithImpl<$Res, $Val extends OfferModel>
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as double,
-      expiryDate: null == expiryDate
+      expiryDate: freezed == expiryDate
           ? _value.expiryDate
           : expiryDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      restaurant: null == restaurant
+              as DateTime?,
+      imagePath: null == imagePath
+          ? _value.imagePath
+          : imagePath // ignore: cast_nullable_to_non_nullable
+              as String,
+      restaurant: freezed == restaurant
           ? _value.restaurant
           : restaurant // ignore: cast_nullable_to_non_nullable
-              as RestaurantModel,
-      user: null == user
+              as RestaurantModel?,
+      user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
-              as UserModel,
+              as UserModel?,
       quantity: null == quantity
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
               as int,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ) as $Val);
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $RestaurantModelCopyWith<$Res> get restaurant {
-    return $RestaurantModelCopyWith<$Res>(_value.restaurant, (value) {
+  $RestaurantModelCopyWith<$Res>? get restaurant {
+    if (_value.restaurant == null) {
+      return null;
+    }
+
+    return $RestaurantModelCopyWith<$Res>(_value.restaurant!, (value) {
       return _then(_value.copyWith(restaurant: value) as $Val);
     });
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $UserModelCopyWith<$Res> get user {
-    return $UserModelCopyWith<$Res>(_value.user, (value) {
+  $UserModelCopyWith<$Res>? get user {
+    if (_value.user == null) {
+      return null;
+    }
+
+    return $UserModelCopyWith<$Res>(_value.user!, (value) {
       return _then(_value.copyWith(user: value) as $Val);
     });
   }
@@ -143,15 +165,17 @@ abstract class _$$OfferModelImplCopyWith<$Res>
       String title,
       String description,
       double price,
-      DateTime expiryDate,
-      RestaurantModel restaurant,
-      UserModel user,
-      int quantity});
+      DateTime? expiryDate,
+      String imagePath,
+      RestaurantModel? restaurant,
+      UserModel? user,
+      int quantity,
+      DateTime? createdAt});
 
   @override
-  $RestaurantModelCopyWith<$Res> get restaurant;
+  $RestaurantModelCopyWith<$Res>? get restaurant;
   @override
-  $UserModelCopyWith<$Res> get user;
+  $UserModelCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -169,10 +193,12 @@ class __$$OfferModelImplCopyWithImpl<$Res>
     Object? title = null,
     Object? description = null,
     Object? price = null,
-    Object? expiryDate = null,
-    Object? restaurant = null,
-    Object? user = null,
+    Object? expiryDate = freezed,
+    Object? imagePath = null,
+    Object? restaurant = freezed,
+    Object? user = freezed,
     Object? quantity = null,
+    Object? createdAt = freezed,
   }) {
     return _then(_$OfferModelImpl(
       id: null == id
@@ -191,22 +217,30 @@ class __$$OfferModelImplCopyWithImpl<$Res>
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as double,
-      expiryDate: null == expiryDate
+      expiryDate: freezed == expiryDate
           ? _value.expiryDate
           : expiryDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      restaurant: null == restaurant
+              as DateTime?,
+      imagePath: null == imagePath
+          ? _value.imagePath
+          : imagePath // ignore: cast_nullable_to_non_nullable
+              as String,
+      restaurant: freezed == restaurant
           ? _value.restaurant
           : restaurant // ignore: cast_nullable_to_non_nullable
-              as RestaurantModel,
-      user: null == user
+              as RestaurantModel?,
+      user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
-              as UserModel,
+              as UserModel?,
       quantity: null == quantity
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
               as int,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -219,10 +253,12 @@ class _$OfferModelImpl implements _OfferModel {
       required this.title,
       required this.description,
       required this.price,
-      required this.expiryDate,
-      required this.restaurant,
-      required this.user,
-      required this.quantity});
+      this.expiryDate,
+      required this.imagePath,
+      this.restaurant,
+      this.user,
+      required this.quantity,
+      this.createdAt});
 
   factory _$OfferModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$OfferModelImplFromJson(json);
@@ -236,17 +272,21 @@ class _$OfferModelImpl implements _OfferModel {
   @override
   final double price;
   @override
-  final DateTime expiryDate;
+  final DateTime? expiryDate;
   @override
-  final RestaurantModel restaurant;
+  final String imagePath;
   @override
-  final UserModel user;
+  final RestaurantModel? restaurant;
+  @override
+  final UserModel? user;
   @override
   final int quantity;
+  @override
+  final DateTime? createdAt;
 
   @override
   String toString() {
-    return 'OfferModel(id: $id, title: $title, description: $description, price: $price, expiryDate: $expiryDate, restaurant: $restaurant, user: $user, quantity: $quantity)';
+    return 'OfferModel(id: $id, title: $title, description: $description, price: $price, expiryDate: $expiryDate, imagePath: $imagePath, restaurant: $restaurant, user: $user, quantity: $quantity, createdAt: $createdAt)';
   }
 
   @override
@@ -261,17 +301,21 @@ class _$OfferModelImpl implements _OfferModel {
             (identical(other.price, price) || other.price == price) &&
             (identical(other.expiryDate, expiryDate) ||
                 other.expiryDate == expiryDate) &&
+            (identical(other.imagePath, imagePath) ||
+                other.imagePath == imagePath) &&
             (identical(other.restaurant, restaurant) ||
                 other.restaurant == restaurant) &&
             (identical(other.user, user) || other.user == user) &&
             (identical(other.quantity, quantity) ||
-                other.quantity == quantity));
+                other.quantity == quantity) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, title, description, price,
-      expiryDate, restaurant, user, quantity);
+      expiryDate, imagePath, restaurant, user, quantity, createdAt);
 
   @JsonKey(ignore: true)
   @override
@@ -293,10 +337,12 @@ abstract class _OfferModel implements OfferModel {
       required final String title,
       required final String description,
       required final double price,
-      required final DateTime expiryDate,
-      required final RestaurantModel restaurant,
-      required final UserModel user,
-      required final int quantity}) = _$OfferModelImpl;
+      final DateTime? expiryDate,
+      required final String imagePath,
+      final RestaurantModel? restaurant,
+      final UserModel? user,
+      required final int quantity,
+      final DateTime? createdAt}) = _$OfferModelImpl;
 
   factory _OfferModel.fromJson(Map<String, dynamic> json) =
       _$OfferModelImpl.fromJson;
@@ -310,13 +356,17 @@ abstract class _OfferModel implements OfferModel {
   @override
   double get price;
   @override
-  DateTime get expiryDate;
+  DateTime? get expiryDate;
   @override
-  RestaurantModel get restaurant;
+  String get imagePath;
   @override
-  UserModel get user;
+  RestaurantModel? get restaurant;
+  @override
+  UserModel? get user;
   @override
   int get quantity;
+  @override
+  DateTime? get createdAt;
   @override
   @JsonKey(ignore: true)
   _$$OfferModelImplCopyWith<_$OfferModelImpl> get copyWith =>
