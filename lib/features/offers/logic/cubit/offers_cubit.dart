@@ -9,7 +9,23 @@ part 'offers_cubit.freezed.dart';
 class OffersCubit extends Cubit<OffersState> {
   final OffersRepository offerRepo;
   OffersCubit(this.offerRepo) : super(OffersState.initial());
-  void fetchAvailabaleOffers() async {
+  Future<List<OfferModel>?> fetchAvailabaleOffersCategory(String category) async {
+    try {
+      emit(OffersState.loading());
+      print("Loading offers...");
+      final offers = await offerRepo.fetchOffersCategory(category: category);
+      print('Fetched data: ${offers}');
+
+      emit(OffersState.success(offers));
+      print("Offers loaded successfully.");
+      return offers;
+    } catch (e) {
+      emit(OffersState.error("Error: $e"));
+      print("Error fetching offers: $e");
+      return null;
+    }
+  }
+  Future<void> fetchAvailabaleOffers() async {
     try {
       emit(OffersState.loading());
       print("Loading offers...");
@@ -21,6 +37,7 @@ class OffersCubit extends Cubit<OffersState> {
     } catch (e) {
       emit(OffersState.error("Error: $e"));
       print("Error fetching offers: $e");
+     
     }
   }
 }

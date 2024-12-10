@@ -81,7 +81,7 @@ class CarouselSlide extends StatelessWidget {
                         ),
                         margin: const EdgeInsets.all(4),
                         width: MediaQuery.of(context).size.width,
-                        height: 290,
+                        height: 340,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -96,7 +96,7 @@ class CarouselSlide extends StatelessWidget {
                                       ? Image.memory(
                                           base64Decode(restaurant.image!),
                                           width: double.infinity,
-                                          height: 120,
+                                          height: 150,
                                           fit: BoxFit.cover,
                                         )
                                       //  Image.network(
