@@ -102,6 +102,7 @@ class _OfferListState extends State<OfferList> {
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => Offerdetails(
+                                  
                                       offerdetails: offer,
                                     )));
                           },

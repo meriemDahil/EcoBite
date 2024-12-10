@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:eco_bite/core/app_color.dart';
+import 'package:eco_bite/features/create_offre/data/offer_model.dart';
 import 'package:eco_bite/features/offers/logic/cubit/offers_cubit.dart';
 import 'package:eco_bite/features/offers/ui/offer_list.dart';
 import 'package:eco_bite/features/offers/ui/offerdetails.dart';
@@ -9,7 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Offers extends StatefulWidget {
-  const Offers({super.key});
+
+   const Offers({super.key, });
+
 
   @override
   State<Offers> createState() => _OffersState();
@@ -71,6 +74,7 @@ class _OffersState extends State<Offers> {
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => Offerdetails(
+                           
                                 offerdetails: offer,
                               )));
                     },

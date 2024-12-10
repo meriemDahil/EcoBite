@@ -2,7 +2,10 @@ import 'package:eco_bite/core/app_color.dart';
 import 'package:eco_bite/features/Authentification/data/user_model.dart';
 import 'package:eco_bite/features/Authentification/logic/cubit/auth_cubit.dart';
 import 'package:eco_bite/features/Authentification/ui/sign_in.dart';
+import 'package:eco_bite/features/create_offre/data/offer_model.dart';
 import 'package:eco_bite/features/home/ui/home.dart';
+import 'package:eco_bite/features/panier/ui/panier.dart';
+import 'package:eco_bite/features/profile/ui/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,16 +20,39 @@ class Tabbar extends StatefulWidget {
 class _TabbarState extends State<Tabbar> with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
+  // Panier state
+  List<OfferModel> panier = [];
+  final PanierCacheService _panierCacheService = PanierCacheService();
+
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
+    _loadPanierFromCache(); // Load panier from cache on app startup
   }
 
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
+  // Load panier from cache
+  Future<void> _loadPanierFromCache() async {
+    panier = await _panierCacheService.loadPanier();
+    setState(() {});
+  }
+
+  // Add item to panier
+  void addToPanier(OfferModel offer) async {
+    setState(() {
+      panier.add(offer);
+    });
+    await _panierCacheService
+        .savePanier(panier); // Save updated panier to cache
+  }
+
+  // Remove item from panier
+  void removeFromPanier(OfferModel offer) async {
+    setState(() {
+      panier.remove(offer);
+    });
+    await _panierCacheService
+        .savePanier(panier); // Save updated panier to cache
   }
 
   @override
@@ -38,31 +64,14 @@ class _TabbarState extends State<Tabbar> with SingleTickerProviderStateMixin {
         actions: [
           Padding(
             padding: EdgeInsets.all(8.0),
-            child: BlocListener<AuthCubit, AuthState>(
-              listener: (context, state) {
-                if (state is Success) {
-                  Navigator.pushReplacementNamed(context, '/signin');
-                } else if (state is Error) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(state.error)),
-                  );
-                }
-              },
-              child: GestureDetector(
-                  child: CircleAvatar(
-                    backgroundImage: AssetImage("assets/profile.jpg"),
-                    radius: 30,
-                  ),
-                  onTap: () async {
-                    context.read<AuthCubit>().signOut();
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => SignIn()),
-                      (route) => false,
-                    );
-                  }),
+            child: GestureDetector(
+              child: CircleAvatar(
+                backgroundImage: AssetImage("assets/profile.jpg"),
+                radius: 30,
+              ),
+              onTap: () async {},
             ),
-          )
+          ),
         ],
         centerTitle: true,
         title: Column(
@@ -89,13 +98,10 @@ class _TabbarState extends State<Tabbar> with SingleTickerProviderStateMixin {
         controller: _tabController,
         tabs: const [
           Tab(icon: Icon(Icons.home)),
-          Tab(icon: Icon(Icons.location_pin)),
-          Tab(icon: Icon(Icons.favorite)),
+          Tab(icon: Icon(Icons.shopping_cart)),
           Tab(icon: Icon(Icons.person)),
         ],
-        labelStyle: const TextStyle(
-          fontWeight: FontWeight.bold,
-        ),
+        labelStyle: const TextStyle(fontWeight: FontWeight.bold),
         indicatorWeight: 1,
         labelColor: AppColor.primary,
         unselectedLabelColor: AppColor.primary,
@@ -105,9 +111,8 @@ class _TabbarState extends State<Tabbar> with SingleTickerProviderStateMixin {
         controller: _tabController,
         children: [
           Home(user: widget.user),
-          const Center(child: Text("Location")),
-          const Center(child: Text("Favorites")),
-          const Center(child: Text("Profile")),
+          PanierScreen(),
+          Profile(user: widget.user),
         ],
       ),
     );

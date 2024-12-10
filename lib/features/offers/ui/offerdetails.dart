@@ -1,18 +1,20 @@
 import 'dart:convert';
-import 'dart:math';
 import 'package:eco_bite/core/app_color.dart';
 import 'package:eco_bite/core/button.dart';
-import 'package:eco_bite/core/comment_bottom_sheet.dart';
-import 'package:eco_bite/features/comment/comment_builder.dart';
 import 'package:eco_bite/features/comment/logic/cubit/comment_cubit.dart';
 import 'package:eco_bite/features/create_offre/data/offer_model.dart';
+import 'package:eco_bite/features/panier/ui/panier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Offerdetails extends StatefulWidget {
   final OfferModel offerdetails;
-  const Offerdetails({required this.offerdetails, super.key});
+
+  const Offerdetails({
+    required this.offerdetails,
+    super.key,
+  });
 
   @override
   State<Offerdetails> createState() => _OfferdetailsState();
@@ -21,12 +23,35 @@ class Offerdetails extends StatefulWidget {
 class _OfferdetailsState extends State<Offerdetails> {
   late int quantity;
   late double price;
+  final PanierCacheService _panierCacheService = PanierCacheService();
+  List<OfferModel> panier = [];
+
   @override
   void initState() {
     super.initState();
     context.read<CommentCubit>().fetchComments();
     quantity = 1;
     price = widget.offerdetails.price;
+    _loadPanierFromCache();
+  }
+
+  Future<void> _loadPanierFromCache() async {
+    panier = await _panierCacheService.loadPanier();
+    setState(() {});
+  }
+
+  // Add to panier
+  Future<void> _addToPanier(OfferModel offer) async {
+    setState(() {
+      panier.add(offer);
+    });
+    await _panierCacheService
+        .savePanier(panier); // Save updated panier to cache
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('${offer.title} added to Panier'),
+      ),
+    );
   }
 
   @override
@@ -303,15 +328,17 @@ class _OfferdetailsState extends State<Offerdetails> {
                                     height:
                                         MediaQuery.sizeOf(context).height / 20),
                                 RoundedButton(
-                                  icon: Icon(
-                                    Icons.shopping_cart,
-                                    color: Colors.white,
-                                    size: 20,
-                                  ),
-                                  label: 'Add To Panier',
-                                  color: AppColor.primary,
-                                  onTap: () async {},
-                                ),
+                                    icon: Icon(
+                                      Icons.shopping_cart,
+                                      color: Colors.white,
+                                      size: 20,
+                                    ),
+                                    label: 'Add To Panier',
+                                    color: AppColor.primary,
+                                    onTap: () {
+                                      _addToPanier(widget.offerdetails);
+                                      
+                                    })
                               ],
                             ),
                           ),
