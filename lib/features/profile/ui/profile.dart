@@ -7,10 +7,87 @@ import 'package:eco_bite/features/Authentification/ui/sign_in.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 
-class Profile extends StatelessWidget {
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+class Profile extends StatefulWidget {
   final UserModel? user;
   Profile({super.key, required this.user});
+  @override
+  State createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  String _address = "Fetching location...";
+
+  Future<void> getCurrentLocation() async {
+    try {
+      // Check if location services are enabled
+      bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        setState(() {
+          _address = "Location services are disabled.";
+        });
+        return;
+      }
+
+      // Check location permission
+      LocationPermission permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          setState(() {
+            _address = "Location permission denied.";
+          });
+          return;
+        }
+      }
+
+      // Get the current position
+      Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
+
+      // Get the address using Nominatim (OpenStreetMap) API
+      final response = await http.get(
+        Uri.parse(
+            'https://nominatim.openstreetmap.org/reverse?lat=${position.latitude}&lon=${position.longitude}&format=json'),
+      );
+
+      if (response.statusCode == 200) {
+        var data = json.decode(response.body);
+        if (data['address'] != null) {
+          setState(() {
+            _address = data['address']['road'] ??
+                data['address']['village'] ??
+                data['address']['city'] ??
+                "No address found.";
+          });
+        } else {
+          setState(() {
+            _address = "No address found.";
+          });
+        }
+      } else {
+        setState(() {
+          _address = "Error fetching address.";
+        });
+      }
+    } catch (e) {
+      setState(() {
+        _address = "Error: $e";
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getCurrentLocation();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,24 +111,24 @@ class Profile extends StatelessWidget {
                   height: 8,
                 ),
                 LabeledTextField(
-                  hintText: user!.email,
+                  hintText: widget.user!.email,
                   label: 'email',
                   readOnly: true,
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height / 40),
                 LabeledTextField(
                   label: "username",
-                  hintText: user!.username,
+                  hintText: widget.user!.username,
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height / 40),
                 LabeledTextField(
                   label: 'Address',
-                  hintText: user!.address,
+                  hintText: _address,
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height / 40),
                 LabeledTextField(
                   label: 'phone number',
-                  hintText: user!.phone,
+                  hintText: widget.user!.phone,
                   keyboardType: TextInputType.phone,
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height / 40),
