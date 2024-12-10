@@ -34,7 +34,9 @@ class _TabbarState extends State<Tabbar> with SingleTickerProviderStateMixin {
   // Load panier from cache
   Future<void> _loadPanierFromCache() async {
     panier = await _panierCacheService.loadPanier();
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   // Add item to panier
