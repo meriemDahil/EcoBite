@@ -26,6 +26,9 @@ mixin _$OfferModel {
   double get price => throw _privateConstructorUsedError;
   DateTime? get expiryDate => throw _privateConstructorUsedError;
   String get imagePath => throw _privateConstructorUsedError;
+  String get address => throw _privateConstructorUsedError;
+  String get phoneNumber => throw _privateConstructorUsedError;
+  String get category => throw _privateConstructorUsedError;
   RestaurantModel? get restaurant => throw _privateConstructorUsedError;
   UserModel? get user => throw _privateConstructorUsedError;
   int get quantity => throw _privateConstructorUsedError;
@@ -50,6 +53,9 @@ abstract class $OfferModelCopyWith<$Res> {
       double price,
       DateTime? expiryDate,
       String imagePath,
+      String address,
+      String phoneNumber,
+      String category,
       RestaurantModel? restaurant,
       UserModel? user,
       int quantity,
@@ -78,6 +84,9 @@ class _$OfferModelCopyWithImpl<$Res, $Val extends OfferModel>
     Object? price = null,
     Object? expiryDate = freezed,
     Object? imagePath = null,
+    Object? address = null,
+    Object? phoneNumber = null,
+    Object? category = null,
     Object? restaurant = freezed,
     Object? user = freezed,
     Object? quantity = null,
@@ -107,6 +116,18 @@ class _$OfferModelCopyWithImpl<$Res, $Val extends OfferModel>
       imagePath: null == imagePath
           ? _value.imagePath
           : imagePath // ignore: cast_nullable_to_non_nullable
+              as String,
+      address: null == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String,
+      phoneNumber: null == phoneNumber
+          ? _value.phoneNumber
+          : phoneNumber // ignore: cast_nullable_to_non_nullable
+              as String,
+      category: null == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
               as String,
       restaurant: freezed == restaurant
           ? _value.restaurant
@@ -167,6 +188,9 @@ abstract class _$$OfferModelImplCopyWith<$Res>
       double price,
       DateTime? expiryDate,
       String imagePath,
+      String address,
+      String phoneNumber,
+      String category,
       RestaurantModel? restaurant,
       UserModel? user,
       int quantity,
@@ -195,6 +219,9 @@ class __$$OfferModelImplCopyWithImpl<$Res>
     Object? price = null,
     Object? expiryDate = freezed,
     Object? imagePath = null,
+    Object? address = null,
+    Object? phoneNumber = null,
+    Object? category = null,
     Object? restaurant = freezed,
     Object? user = freezed,
     Object? quantity = null,
@@ -224,6 +251,18 @@ class __$$OfferModelImplCopyWithImpl<$Res>
       imagePath: null == imagePath
           ? _value.imagePath
           : imagePath // ignore: cast_nullable_to_non_nullable
+              as String,
+      address: null == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String,
+      phoneNumber: null == phoneNumber
+          ? _value.phoneNumber
+          : phoneNumber // ignore: cast_nullable_to_non_nullable
+              as String,
+      category: null == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
               as String,
       restaurant: freezed == restaurant
           ? _value.restaurant
@@ -255,6 +294,9 @@ class _$OfferModelImpl implements _OfferModel {
       required this.price,
       this.expiryDate,
       required this.imagePath,
+      required this.address,
+      required this.phoneNumber,
+      required this.category,
       this.restaurant,
       this.user,
       required this.quantity,
@@ -276,6 +318,12 @@ class _$OfferModelImpl implements _OfferModel {
   @override
   final String imagePath;
   @override
+  final String address;
+  @override
+  final String phoneNumber;
+  @override
+  final String category;
+  @override
   final RestaurantModel? restaurant;
   @override
   final UserModel? user;
@@ -286,7 +334,7 @@ class _$OfferModelImpl implements _OfferModel {
 
   @override
   String toString() {
-    return 'OfferModel(id: $id, title: $title, description: $description, price: $price, expiryDate: $expiryDate, imagePath: $imagePath, restaurant: $restaurant, user: $user, quantity: $quantity, createdAt: $createdAt)';
+    return 'OfferModel(id: $id, title: $title, description: $description, price: $price, expiryDate: $expiryDate, imagePath: $imagePath, address: $address, phoneNumber: $phoneNumber, category: $category, restaurant: $restaurant, user: $user, quantity: $quantity, createdAt: $createdAt)';
   }
 
   @override
@@ -303,6 +351,11 @@ class _$OfferModelImpl implements _OfferModel {
                 other.expiryDate == expiryDate) &&
             (identical(other.imagePath, imagePath) ||
                 other.imagePath == imagePath) &&
+            (identical(other.address, address) || other.address == address) &&
+            (identical(other.phoneNumber, phoneNumber) ||
+                other.phoneNumber == phoneNumber) &&
+            (identical(other.category, category) ||
+                other.category == category) &&
             (identical(other.restaurant, restaurant) ||
                 other.restaurant == restaurant) &&
             (identical(other.user, user) || other.user == user) &&
@@ -314,8 +367,21 @@ class _$OfferModelImpl implements _OfferModel {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, description, price,
-      expiryDate, imagePath, restaurant, user, quantity, createdAt);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      title,
+      description,
+      price,
+      expiryDate,
+      imagePath,
+      address,
+      phoneNumber,
+      category,
+      restaurant,
+      user,
+      quantity,
+      createdAt);
 
   @JsonKey(ignore: true)
   @override
@@ -339,6 +405,9 @@ abstract class _OfferModel implements OfferModel {
       required final double price,
       final DateTime? expiryDate,
       required final String imagePath,
+      required final String address,
+      required final String phoneNumber,
+      required final String category,
       final RestaurantModel? restaurant,
       final UserModel? user,
       required final int quantity,
@@ -359,6 +428,12 @@ abstract class _OfferModel implements OfferModel {
   DateTime? get expiryDate;
   @override
   String get imagePath;
+  @override
+  String get address;
+  @override
+  String get phoneNumber;
+  @override
+  String get category;
   @override
   RestaurantModel? get restaurant;
   @override

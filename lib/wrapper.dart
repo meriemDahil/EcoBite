@@ -2,6 +2,8 @@ import 'package:eco_bite/core/enum_role.dart';
 import 'package:eco_bite/features/Authentification/logic/cubit/auth_cubit.dart';
 import 'package:eco_bite/features/create_offre/ui/add_offer.dart';
 import 'package:eco_bite/features/home/ui/home.dart';
+import 'package:eco_bite/features/home/ui/widgets/tab_bar.dart';
+import 'package:eco_bite/features/splashScreen/loading.dart';
 import 'package:eco_bite/features/splashScreen/splash_screen.dart';
 import 'package:eco_bite/features/splashScreen/welcome_page.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +18,7 @@ class AuthWrapper extends StatelessWidget {
       builder: (context, state) {
         return state.maybeWhen(
             initial: () => SplashScreen(),
-            loading: () => const Center(child: CircularProgressIndicator()),
+            loading: () => const LoadingIndicator(),
             success: (user) {
               print(user?.role.name);
               if (user?.role.name == 'RESTAURANT_OWNER')
@@ -24,7 +26,7 @@ class AuthWrapper extends StatelessWidget {
                   user: user,
                 );
               else
-                return Home(
+                return Tabbar(
                   user: user,
                 );
             },

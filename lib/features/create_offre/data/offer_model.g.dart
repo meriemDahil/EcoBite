@@ -16,6 +16,9 @@ _$OfferModelImpl _$$OfferModelImplFromJson(Map<String, dynamic> json) =>
           ? null
           : DateTime.parse(json['expiryDate'] as String),
       imagePath: json['imagePath'] as String,
+      address: json['address'] as String,
+      phoneNumber: json['phoneNumber'] as String,
+      category: json['category'] as String,
       restaurant: json['restaurant'] == null
           ? null
           : RestaurantModel.fromJson(
@@ -37,6 +40,9 @@ Map<String, dynamic> _$$OfferModelImplToJson(_$OfferModelImpl instance) =>
       'price': instance.price,
       'expiryDate': instance.expiryDate?.toIso8601String(),
       'imagePath': instance.imagePath,
+      'address': instance.address,
+      'phoneNumber': instance.phoneNumber,
+      'category': instance.category,
       'restaurant': instance.restaurant,
       'user': instance.user,
       'quantity': instance.quantity,

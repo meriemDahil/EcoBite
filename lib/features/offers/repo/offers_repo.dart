@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eco_bite/features/Authentification/data/user_model.dart';
-
 import 'package:eco_bite/features/create_offre/data/offer_model.dart';
-import 'package:eco_bite/features/home/data/restaurant.dart';
+
 
 class OffersRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -29,6 +27,9 @@ class OffersRepository {
         price: (data['price'] as num?)?.toDouble() ?? 0.0,
         expiryDate: convertTimestamp(data['expiryDate']),
         createdAt: convertTimestamp(data['createdAt']),
+        address: data['address'] ?? '',
+        phoneNumber: data['phoneNumber'] ?? '',
+        category:data['category'] ?? ''
         
       );
     }).toList());

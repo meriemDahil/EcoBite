@@ -17,7 +17,8 @@ class AuthCubit extends Cubit<AuthState> {
   // TextEditingControllers for input fields
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
@@ -35,8 +36,8 @@ class AuthCubit extends Cubit<AuthState> {
     confirmPasswordController.clear();
   }
 
-  AuthCubit(this._authRepository) : super(const AuthState.initial()){
-      checkAuthStatus();
+  AuthCubit(this._authRepository) : super(const AuthState.initial()) {
+    checkAuthStatus();
   }
 
   @override
@@ -50,9 +51,11 @@ class AuthCubit extends Cubit<AuthState> {
     imageController.dispose();
     return super.close();
   }
-  static const String USER_DATA_KEY = 'user_data';  // New key for storing user data
 
-Future<void> signUp() async {
+  static const String USER_DATA_KEY =
+      'user_data'; // New key for storing user data
+
+  Future<void> signUp() async {
     if (formKeySignUp.currentState?.validate() ?? false) {
       emit(const AuthState.loading());
       try {
@@ -68,7 +71,8 @@ Future<void> signUp() async {
         if (user != null) {
           final prefs = await SharedPreferences.getInstance();
           await prefs.setBool(AUTH_STATUS_KEY, true);
-          await saveUserData(user as UserModel);  // Add this line to save user data
+          await saveUserData(
+              user as UserModel); // Add this line to save user data
           clearControllers();
           emit(AuthState.success(user: user as UserModel?));
         } else {
@@ -89,7 +93,7 @@ Future<void> signUp() async {
         'address': user.address,
         'phone': user.phone,
         'id': user.id,
-        'role': user.role.toString(),  // Convert enum to string
+        'role': user.role.toString(), // Convert enum to string
       };
       print('Saving user data: $userData'); // Debug print
       await prefs.setString(USER_DATA_KEY, json.encode(userData));
@@ -103,11 +107,11 @@ Future<void> signUp() async {
       final prefs = await SharedPreferences.getInstance();
       final userDataString = prefs.getString(USER_DATA_KEY);
       print('Loaded user data string: $userDataString'); // Debug print
-      
+
       if (userDataString != null) {
         final userData = json.decode(userDataString);
         print('Decoded user data: $userData'); // Debug print
-        
+
         return UserModel(
           username: userData['username'],
           email: userData['email'],
@@ -142,7 +146,7 @@ Future<void> signUp() async {
       final prefs = await SharedPreferences.getInstance();
       final isAuthenticated = prefs.getBool(AUTH_STATUS_KEY) ?? false;
       print('Is authenticated: $isAuthenticated'); // Debug print
-      
+
       if (isAuthenticated) {
         final userData = await loadUserData();
         print('Loaded user data in checkAuthStatus: $userData'); // Debug print
@@ -162,7 +166,6 @@ Future<void> signUp() async {
     }
   }
 
-
   Future<void> signIn() async {
     if (formKey.currentState?.validate() ?? false) {
       emit(const AuthState.loading());
@@ -174,7 +177,7 @@ Future<void> signUp() async {
         if (user != null) {
           final prefs = await SharedPreferences.getInstance();
           await prefs.setBool(AUTH_STATUS_KEY, true);
-          await saveUserData(user as UserModel);  // Save user data
+          await saveUserData(user as UserModel); // Save user data
           clearControllers();
           emit(AuthState.success(user: user as UserModel?));
         } else {
@@ -215,24 +218,27 @@ Future<void> signUp() async {
   Future<void> signOut() async {
     emit(const AuthState.loading());
     try {
+      debugPrint("Attempting to sign out...");
       await _authRepository.signOut();
+      debugPrint("Sign out successful. Clearing SharedPreferences...");
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool(AUTH_STATUS_KEY, false);
-      await prefs.remove(USER_DATA_KEY);  // Clear stored user data
-      emit(const AuthState.initial());  // Change this from success to initial
+      await prefs.remove(USER_DATA_KEY);
+      emit(const AuthState.initial());
+      debugPrint("State emitted: initial");
     } catch (e) {
+      debugPrint("Error during sign-out: $e");
       emit(AuthState.error('Error signing out: $e'));
     }
   }
 
-  Future<void> passwordReset()async {
-     emit(const AuthState.loading());
-     try{
+  Future<void> passwordReset() async {
+    emit(const AuthState.loading());
+    try {
       await _authRepository.passwordReset(emailController.text);
-      emit(const AuthState.passwordResteSuccess()); 
-     }catch (e) {
+      emit(const AuthState.passwordResteSuccess());
+    } catch (e) {
       emit(AuthState.error('Error reseting password: $e'));
     }
   }
 }
-

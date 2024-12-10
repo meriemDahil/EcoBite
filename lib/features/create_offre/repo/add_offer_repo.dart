@@ -1,35 +1,34 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eco_bite/features/Authentification/data/user_model.dart';
-import 'package:eco_bite/features/create_offre/data/offer_model.dart';
-import 'package:eco_bite/features/home/data/restaurant.dart';
 
-class AddOfferRepo {
-  Future<OfferModel> fetchOffer(String offerId) async {
-    final offerDoc = await FirebaseFirestore.instance
-        .collection('offers')
-        .doc(offerId)
-        .get();
-    final offerData = offerDoc.data();
+class OfferRepository {
+  Future<void> addOffer({
+    required String restaurantId,
+    required String description,
+    required String mealName,
+    required String? imagePath,
+    required int quantity,
+    required String? address,
+    required String? phoneNumber,
+    required double price,
+    required String category
+  }) async {
+    try {
+      final newOffer = {
+        'description': description.trim(),
+        'title': mealName.trim(),
+        'restaurantId': restaurantId,
+        'imagePath': imagePath,
+        'quantity': quantity,
+        'address': address,
+        'phoneNumber': phoneNumber,
+        'price': price,
+        'createdAt': FieldValue.serverTimestamp(),
+        'category':category
+      };
 
-    final restaurantDoc = await FirebaseFirestore.instance
-        .collection('restaurans')
-        .doc(offerData!['restaurantId'])
-        .get();
-    final userDoc = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(offerData['userId'])
-        .get();
-
-    return OfferModel(
-        id: offerData['id'],
-        title: offerData['title'],
-        description: offerData['description'],
-        price: offerData['price'],
-        expiryDate: DateTime.parse(offerData['expiryDate']),
-        restaurant: RestaurantModel.fromJson(restaurantDoc.data()!),
-        user: UserModel.fromJson(userDoc.data()!),
-        quantity: offerData['quantity'],
-        imagePath: offerData['imagePath']);
-        
+      await FirebaseFirestore.instance.collection('offers').add(newOffer);
+    } catch (e) {
+      throw Exception('Error adding offer: $e');
+    }
   }
 }

@@ -2,7 +2,11 @@ import 'package:eco_bite/features/Authentification/logic/cubit/auth_cubit.dart';
 import 'package:eco_bite/features/Authentification/repo/auth_repo.dart';
 import 'package:eco_bite/features/Authentification/ui/sign_up.dart';
 import 'package:eco_bite/features/Authentification/ui/sign_in.dart';
+import 'package:eco_bite/features/comment/logic/cubit/comment_cubit.dart';
+import 'package:eco_bite/features/comment/repo/comment_repo.dart';
+import 'package:eco_bite/features/create_offre/logic/cubit/add_offer_cubit.dart';
 import 'package:eco_bite/features/create_offre/logic/cubit/image_cubit.dart';
+import 'package:eco_bite/features/create_offre/repo/add_offer_repo.dart';
 import 'package:eco_bite/features/home/logic/cubit/restaurant_cubit.dart';
 import 'package:eco_bite/features/home/repo/restaurant_repo.dart';
 import 'package:eco_bite/features/offers/logic/cubit/offers_cubit.dart';
@@ -28,7 +32,13 @@ void main() async {
         ),
         BlocProvider(
             create: (context) => RestaurantCubit(RestaurantRepository())),
-        BlocProvider(create: (context) => OffersCubit(OffersRepository()))
+        BlocProvider(create: (context) => OffersCubit(OffersRepository())),
+        BlocProvider(
+          create: (context) => AddOfferCubit(OfferRepository()),
+        ),
+        BlocProvider(
+          create: (context) => CommentCubit(CommentsRepo()),
+        ),
       ],
       child: const MyApp(),
     ),
@@ -45,8 +55,6 @@ class MyApp extends StatelessWidget {
       routes: {
         //  "/": (context) => WelcomePage(),
         "/signin": (context) => SignIn(),
-        //"/home": (context) => Home(user: null,),
-        // "/tabbar": (context) => Tabbar(),
         "/signup": (context) => SignUpPage(),
         "/welcomepage": (context) => WelcomePage()
       },
