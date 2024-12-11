@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:eco_bite/core/app_color.dart';
 import 'package:eco_bite/features/Authentification/data/user_model.dart';
 import 'package:eco_bite/features/Authentification/logic/cubit/auth_cubit.dart';
@@ -8,6 +10,7 @@ import 'package:eco_bite/features/panier/ui/panier.dart';
 import 'package:eco_bite/features/profile/ui/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
 
 class Tabbar extends StatefulWidget {
   final UserModel? user;
@@ -23,12 +26,75 @@ class _TabbarState extends State<Tabbar> with SingleTickerProviderStateMixin {
   // Panier state
   List<OfferModel> panier = [];
   final PanierCacheService _panierCacheService = PanierCacheService();
+   String _address = "Fetching location...";
+
+  Future<void> getCurrentLocation() async {
+    try {
+      // Check if location services are enabled
+      bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        setState(() {
+          _address = "Location services are disabled.";
+        });
+        return;
+      }
+
+      // Check location permission
+      LocationPermission permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          setState(() {
+            _address = "Location permission denied.";
+          });
+          return;
+        }
+      }
+
+      // Get the current position
+      Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
+
+      // Get the address using Nominatim (OpenStreetMap) API
+      final response = await http.get(
+        Uri.parse(
+            'https://nominatim.openstreetmap.org/reverse?lat=${position.latitude}&lon=${position.longitude}&format=json'),
+      );
+
+      if (response.statusCode == 200) {
+        var data = json.decode(response.body);
+        if (data['address'] != null) {
+          setState(() {
+            _address = data['address']['road'] ??
+                data['address']['village'] ??
+                data['address']['city'] ??
+                "No address found.";
+          });
+        } else {
+          setState(() {
+            _address = "No address found.";
+          });
+        }
+      } else {
+        setState(() {
+          _address = "Error fetching address.";
+        });
+      }
+    } catch (e) {
+      setState(() {
+        _address = "Error: $e";
+      });
+    }
+  }
+
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
-    _loadPanierFromCache(); // Load panier from cache on app startup
+    _loadPanierFromCache();
+    getCurrentLocation(); 
   }
 
   // Load panier from cache
@@ -86,7 +152,7 @@ class _TabbarState extends State<Tabbar> with SingleTickerProviderStateMixin {
               ],
             ),
             Text(
-              "cité 1200 El biar, Alger",
+              _address,
               style: TextStyle(fontSize: 14, color: AppColor.primary),
             ),
           ],

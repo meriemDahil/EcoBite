@@ -64,8 +64,11 @@ class _OfferListState extends State<OfferList> {
 
                         setState(() {
                           isLoading = true;
-                          isSelectedList[index] = value;
+                          // Deselect all chips
+                          isSelectedList =
+                              List.generate(chips.length, (i) => i == index);
                         });
+
                         // Fetch the offers
                         final offers = await context
                             .read<OffersCubit>()
@@ -102,7 +105,6 @@ class _OfferListState extends State<OfferList> {
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => Offerdetails(
-                                  
                                       offerdetails: offer,
                                     )));
                           },
