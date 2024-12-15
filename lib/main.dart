@@ -1,3 +1,4 @@
+import 'package:eco_bite/core/notificationsService.dart';
 import 'package:eco_bite/features/Authentification/logic/cubit/auth_cubit.dart';
 import 'package:eco_bite/features/Authentification/repo/auth_repo.dart';
 import 'package:eco_bite/features/Authentification/ui/sign_up.dart';
@@ -18,9 +19,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await NotificationService.instance.initialize();
   runApp(
     MultiBlocProvider(
       providers: [

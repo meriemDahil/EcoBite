@@ -26,7 +26,7 @@ class _TabbarState extends State<Tabbar> with SingleTickerProviderStateMixin {
   // Panier state
   List<OfferModel> panier = [];
   final PanierCacheService _panierCacheService = PanierCacheService();
-   String _address = "Fetching location...";
+  String _address = "Fetching location...";
 
   Future<void> getCurrentLocation() async {
     try {
@@ -88,13 +88,12 @@ class _TabbarState extends State<Tabbar> with SingleTickerProviderStateMixin {
     }
   }
 
-
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
     _loadPanierFromCache();
-    getCurrentLocation(); 
+    getCurrentLocation();
   }
 
   // Load panier from cache

@@ -46,7 +46,6 @@ Future<List<OfferModel>> fetchOffersCategory({required String category}) async {
 
   // Map documents to OfferModel instances
   return querySnapshot.docs.map((doc) {
-    // Safely handle null data
     final data = doc.data() as Map<String, dynamic>? ?? {};
 
     // Helper function to convert Firestore Timestamp to DateTime
