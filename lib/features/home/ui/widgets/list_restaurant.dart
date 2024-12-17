@@ -159,7 +159,7 @@ class _ListRestaurantState extends State<ListRestaurant> {
                               ),
                               const SizedBox(width: 4),
                               Text(
-                                restaurant.rating.toString(),
+                                "${double.parse((restaurant.rating)!.toStringAsFixed(2))}",
                                 style: const TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w600,

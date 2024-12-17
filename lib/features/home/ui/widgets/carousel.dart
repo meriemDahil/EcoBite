@@ -135,7 +135,7 @@ class CarouselSlide extends StatelessWidget {
                                             color: Colors.yellow, size: 17),
                                         const SizedBox(width: 4),
                                         Text(
-                                          restaurant.rating.toString(),
+                                          "${double.parse((restaurant.rating)!.toStringAsFixed(2))}",
                                           style: const TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w600,

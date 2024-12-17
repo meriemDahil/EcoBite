@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class RestaurantDetails extends StatefulWidget {
-  final RestaurantModel restaurantDetails;
-  const RestaurantDetails({super.key, required this.restaurantDetails});
+  RestaurantModel restaurantDetails;
+  RestaurantDetails({super.key, required this.restaurantDetails});
 
   @override
   State<RestaurantDetails> createState() => _RestaurantDetailsState();
@@ -21,7 +21,7 @@ class _RestaurantDetailsState extends State<RestaurantDetails> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    rating = widget.restaurantDetails.rating!;
+    // rating = widget.restaurantDetails.rating!;
   }
 
   @override
@@ -106,25 +106,35 @@ class _RestaurantDetailsState extends State<RestaurantDetails> {
                                       onPressed: () async {
                                         setState(() {
                                           isStarred = !isStarred;
-                                          if (isStarred) {
-                                            rating = rating + 0.1;
-                                          } else {
-                                            rating = rating - 0.1;
-                                          }
-                                          widget.restaurantDetails.rating = rating;
+                                          double newRating = isStarred
+                                              ? widget.restaurantDetails
+                                                      .rating! +
+                                                  0.1 // Increment rating
+                                              : widget.restaurantDetails
+                                                      .rating! -
+                                                  0.1; // Decrement rating
+
+                                          // Use copyWith to create a new instance with the updated rating
+                                          widget.restaurantDetails = widget
+                                              .restaurantDetails
+                                              .copyWith(rating: newRating);
                                         });
-                                        print(FirebaseFirestore.instance
-                                            .collection('restaurants')
-                                            .doc(widget.restaurantDetails.id));
 
                                         try {
+                                          // Update rating in Firestore
                                           await FirebaseFirestore.instance
                                               .collection('restaurans')
                                               .doc(widget.restaurantDetails.id)
-                                              .update({'rating': rating});
+                                              .update({
+                                            'rating':
+                                                widget.restaurantDetails.rating
+                                          });
+
+                                          print(
+                                              "Rating updated: ${widget.restaurantDetails.rating}");
                                         } catch (e) {
                                           print(
-                                              'Error updating rating in Firestore: $e');
+                                              "Error updating rating in Firestore: $e");
                                         }
                                       },
                                       icon: Icon(
@@ -139,7 +149,7 @@ class _RestaurantDetailsState extends State<RestaurantDetails> {
                                       ),
                                     ),
                                     Text(
-                                      "Rating: ${rating}",
+                                      "Rating: ${double.parse((widget.restaurantDetails.rating)!.toStringAsFixed(2))}",
                                       style: TextStyle(fontSize: 18),
                                     ),
                                   ],
