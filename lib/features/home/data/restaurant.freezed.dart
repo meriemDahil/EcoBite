@@ -20,22 +20,16 @@ RestaurantModel _$RestaurantModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$RestaurantModel {
-  String get id =>
-      throw _privateConstructorUsedError; // Unique restaurant ID (could be linked to the user ID)
+  String get id => throw _privateConstructorUsedError;
   String get restaurantName =>
       throw _privateConstructorUsedError; // Restaurant name
-  String? get address =>
-      throw _privateConstructorUsedError; // Address of the restaurant
-  String? get phone =>
-      throw _privateConstructorUsedError; // Restaurant phone number
-  String? get image =>
-      throw _privateConstructorUsedError; // Restaurant image URL
-  String? get openingTime =>
-      throw _privateConstructorUsedError; // Opening time (e.g., "09:00 AM")
-  String? get closingTime =>
-      throw _privateConstructorUsedError; // Closing time (e.g., "10:00 PM")
-  double? get rating =>
-      throw _privateConstructorUsedError; // Rating of the restaurant
+  String? get address => throw _privateConstructorUsedError;
+  String get description => throw _privateConstructorUsedError;
+  String? get phone => throw _privateConstructorUsedError;
+  String? get image => throw _privateConstructorUsedError;
+  String? get openingTime => throw _privateConstructorUsedError;
+  String? get closingTime => throw _privateConstructorUsedError;
+  double? get rating => throw _privateConstructorUsedError;
   List<String>? get menuItems => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -54,6 +48,7 @@ abstract class $RestaurantModelCopyWith<$Res> {
       {String id,
       String restaurantName,
       String? address,
+      String description,
       String? phone,
       String? image,
       String? openingTime,
@@ -78,6 +73,7 @@ class _$RestaurantModelCopyWithImpl<$Res, $Val extends RestaurantModel>
     Object? id = null,
     Object? restaurantName = null,
     Object? address = freezed,
+    Object? description = null,
     Object? phone = freezed,
     Object? image = freezed,
     Object? openingTime = freezed,
@@ -98,6 +94,10 @@ class _$RestaurantModelCopyWithImpl<$Res, $Val extends RestaurantModel>
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String?,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
       phone: freezed == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
@@ -138,6 +138,7 @@ abstract class _$$RestaurantModelImplCopyWith<$Res>
       {String id,
       String restaurantName,
       String? address,
+      String description,
       String? phone,
       String? image,
       String? openingTime,
@@ -160,6 +161,7 @@ class __$$RestaurantModelImplCopyWithImpl<$Res>
     Object? id = null,
     Object? restaurantName = null,
     Object? address = freezed,
+    Object? description = null,
     Object? phone = freezed,
     Object? image = freezed,
     Object? openingTime = freezed,
@@ -180,6 +182,10 @@ class __$$RestaurantModelImplCopyWithImpl<$Res>
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String?,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
       phone: freezed == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
@@ -215,6 +221,7 @@ class _$RestaurantModelImpl implements _RestaurantModel {
       {required this.id,
       required this.restaurantName,
       this.address,
+      required this.description,
       this.phone,
       this.image,
       this.openingTime,
@@ -228,30 +235,24 @@ class _$RestaurantModelImpl implements _RestaurantModel {
 
   @override
   final String id;
-// Unique restaurant ID (could be linked to the user ID)
   @override
   final String restaurantName;
 // Restaurant name
   @override
   final String? address;
-// Address of the restaurant
+  @override
+  final String description;
   @override
   final String? phone;
-// Restaurant phone number
   @override
   final String? image;
-// Restaurant image URL
   @override
   final String? openingTime;
-// Opening time (e.g., "09:00 AM")
   @override
   final String? closingTime;
-// Closing time (e.g., "10:00 PM")
   @override
   final double? rating;
-// Rating of the restaurant
   final List<String>? _menuItems;
-// Rating of the restaurant
   @override
   List<String>? get menuItems {
     final value = _menuItems;
@@ -263,7 +264,7 @@ class _$RestaurantModelImpl implements _RestaurantModel {
 
   @override
   String toString() {
-    return 'RestaurantModel(id: $id, restaurantName: $restaurantName, address: $address, phone: $phone, image: $image, openingTime: $openingTime, closingTime: $closingTime, rating: $rating, menuItems: $menuItems)';
+    return 'RestaurantModel(id: $id, restaurantName: $restaurantName, address: $address, description: $description, phone: $phone, image: $image, openingTime: $openingTime, closingTime: $closingTime, rating: $rating, menuItems: $menuItems)';
   }
 
   @override
@@ -275,6 +276,8 @@ class _$RestaurantModelImpl implements _RestaurantModel {
             (identical(other.restaurantName, restaurantName) ||
                 other.restaurantName == restaurantName) &&
             (identical(other.address, address) || other.address == address) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
             (identical(other.phone, phone) || other.phone == phone) &&
             (identical(other.image, image) || other.image == image) &&
             (identical(other.openingTime, openingTime) ||
@@ -293,6 +296,7 @@ class _$RestaurantModelImpl implements _RestaurantModel {
       id,
       restaurantName,
       address,
+      description,
       phone,
       image,
       openingTime,
@@ -320,6 +324,7 @@ abstract class _RestaurantModel implements RestaurantModel {
       {required final String id,
       required final String restaurantName,
       final String? address,
+      required final String description,
       final String? phone,
       final String? image,
       final String? openingTime,
@@ -332,21 +337,23 @@ abstract class _RestaurantModel implements RestaurantModel {
 
   @override
   String get id;
-  @override // Unique restaurant ID (could be linked to the user ID)
+  @override
   String get restaurantName;
   @override // Restaurant name
   String? get address;
-  @override // Address of the restaurant
+  @override
+  String get description;
+  @override
   String? get phone;
-  @override // Restaurant phone number
+  @override
   String? get image;
-  @override // Restaurant image URL
+  @override
   String? get openingTime;
-  @override // Opening time (e.g., "09:00 AM")
+  @override
   String? get closingTime;
-  @override // Closing time (e.g., "10:00 PM")
+  @override
   double? get rating;
-  @override // Rating of the restaurant
+  @override
   List<String>? get menuItems;
   @override
   @JsonKey(ignore: true)

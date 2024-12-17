@@ -5,6 +5,7 @@ import 'package:eco_bite/features/Authentification/data/user_model.dart';
 import 'package:eco_bite/features/Authentification/logic/cubit/auth_cubit.dart';
 import 'package:eco_bite/features/Authentification/ui/sign_in.dart';
 import 'package:eco_bite/features/home/data/restaurant.dart';
+import 'package:eco_bite/features/home/ui/restaurant_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -101,31 +102,39 @@ class _ListRestaurantState extends State<ListRestaurant> {
                 children: [
                   Stack(
                     children: [
-                      ClipRRect(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20),
-                        ),
-                        child: restaurant.image != null &&
-                                restaurant.image!.isNotEmpty
-                            ? Image.memory(
-                                base64Decode(restaurant.image!),
-                                width: double.infinity,
-                                height: 150,
-                                fit: BoxFit.cover,
-                              )
-                            : Container(
-                                width: double.infinity,
-                                height: 150,
-                                color: Colors.grey[300],
-                                child: Center(
-                                  child: Icon(
-                                    Icons.image_not_supported,
-                                    size: 50,
-                                    color: Colors.grey[600],
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => RestaurantDetails(
+                                    restaurantDetails: restaurant,
+                                  )));
+                        },
+                        child: ClipRRect(
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20),
+                          ),
+                          child: restaurant.image != null &&
+                                  restaurant.image!.isNotEmpty
+                              ? Image.memory(
+                                  base64Decode(restaurant.image!),
+                                  width: double.infinity,
+                                  height: 150,
+                                  fit: BoxFit.cover,
+                                )
+                              : Container(
+                                  width: double.infinity,
+                                  height: 150,
+                                  color: Colors.grey[300],
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.image_not_supported,
+                                      size: 50,
+                                      color: Colors.grey[600],
+                                    ),
                                   ),
                                 ),
-                              ),
+                        ),
                       ),
                       // Rating badge
                       Positioned(

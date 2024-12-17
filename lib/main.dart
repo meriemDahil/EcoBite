@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
         "/signin": (context) => SignIn(),
         "/signup": (context) => SignUpPage(),
         "/welcomepage": (context) => WelcomePage(),
-        "/restaurantDetails":(context) => RestaurantDetails()
+       // "/restaurantDetails":(context) => RestaurantDetails()
       },
       title: 'Eco Bite',
       debugShowCheckedModeBanner: false,

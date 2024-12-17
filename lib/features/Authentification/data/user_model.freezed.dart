@@ -29,6 +29,7 @@ mixin _$UserModel {
   String? get phone =>
       throw _privateConstructorUsedError; // Optional phone number
   String? get image => throw _privateConstructorUsedError;
+  double? get points => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -49,7 +50,8 @@ abstract class $UserModelCopyWith<$Res> {
       UserRole role,
       String? address,
       String? phone,
-      String? image});
+      String? image,
+      double? points});
 }
 
 /// @nodoc
@@ -73,6 +75,7 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? address = freezed,
     Object? phone = freezed,
     Object? image = freezed,
+    Object? points = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -107,6 +110,10 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as String?,
+      points: freezed == points
+          ? _value.points
+          : points // ignore: cast_nullable_to_non_nullable
+              as double?,
     ) as $Val);
   }
 }
@@ -127,7 +134,8 @@ abstract class _$$UserModelImplCopyWith<$Res>
       UserRole role,
       String? address,
       String? phone,
-      String? image});
+      String? image,
+      double? points});
 }
 
 /// @nodoc
@@ -149,6 +157,7 @@ class __$$UserModelImplCopyWithImpl<$Res>
     Object? address = freezed,
     Object? phone = freezed,
     Object? image = freezed,
+    Object? points = freezed,
   }) {
     return _then(_$UserModelImpl(
       id: null == id
@@ -183,6 +192,10 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as String?,
+      points: freezed == points
+          ? _value.points
+          : points // ignore: cast_nullable_to_non_nullable
+              as double?,
     ));
   }
 }
@@ -198,7 +211,8 @@ class _$UserModelImpl implements _UserModel {
       required this.role,
       this.address,
       this.phone,
-      this.image});
+      this.image,
+      this.points});
 
   factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserModelImplFromJson(json);
@@ -226,10 +240,12 @@ class _$UserModelImpl implements _UserModel {
 // Optional phone number
   @override
   final String? image;
+  @override
+  final double? points;
 
   @override
   String toString() {
-    return 'UserModel(id: $id, username: $username, email: $email, password: $password, role: $role, address: $address, phone: $phone, image: $image)';
+    return 'UserModel(id: $id, username: $username, email: $email, password: $password, role: $role, address: $address, phone: $phone, image: $image, points: $points)';
   }
 
   @override
@@ -246,13 +262,14 @@ class _$UserModelImpl implements _UserModel {
             (identical(other.role, role) || other.role == role) &&
             (identical(other.address, address) || other.address == address) &&
             (identical(other.phone, phone) || other.phone == phone) &&
-            (identical(other.image, image) || other.image == image));
+            (identical(other.image, image) || other.image == image) &&
+            (identical(other.points, points) || other.points == points));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, username, email, password, role, address, phone, image);
+  int get hashCode => Object.hash(runtimeType, id, username, email, password,
+      role, address, phone, image, points);
 
   @JsonKey(ignore: true)
   @override
@@ -277,7 +294,8 @@ abstract class _UserModel implements UserModel {
       required final UserRole role,
       final String? address,
       final String? phone,
-      final String? image}) = _$UserModelImpl;
+      final String? image,
+      final double? points}) = _$UserModelImpl;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$UserModelImpl.fromJson;
@@ -298,6 +316,8 @@ abstract class _UserModel implements UserModel {
   String? get phone;
   @override // Optional phone number
   String? get image;
+  @override
+  double? get points;
   @override
   @JsonKey(ignore: true)
   _$$UserModelImplCopyWith<_$UserModelImpl> get copyWith =>

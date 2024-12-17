@@ -14,7 +14,8 @@ class UserModel with _$UserModel {
     required UserRole role,           // User role (enum)
     String? address,                  // Optional address
     String? phone,                    // Optional phone number
-    String? image,                    // Optional image URL
+    String? image,       
+    double? points,             // Optional image URL
   }) = _UserModel;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);

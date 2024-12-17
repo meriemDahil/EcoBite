@@ -16,6 +16,7 @@ _$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
       address: json['address'] as String?,
       phone: json['phone'] as String?,
       image: json['image'] as String?,
+      points: (json['points'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
@@ -28,6 +29,7 @@ Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
       'address': instance.address,
       'phone': instance.phone,
       'image': instance.image,
+      'points': instance.points,
     };
 
 const _$UserRoleEnumMap = {

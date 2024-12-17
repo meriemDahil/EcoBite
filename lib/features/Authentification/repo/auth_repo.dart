@@ -1,4 +1,3 @@
-
 import 'package:eco_bite/core/enum_role.dart';
 import 'package:eco_bite/features/Authentification/data/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -18,11 +17,8 @@ abstract class AuthRepository {
   Future<UserModel?> signIn({required String email, required String password});
   Future<void> signOut();
   Future<void> passwordReset(String mail);
-  
-  
-
-  
 }
+
 class FirebaseAuthRepository implements AuthRepository {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -36,6 +32,7 @@ class FirebaseAuthRepository implements AuthRepository {
     String? address,
     String? phone,
     String? image,
+    double? pointe = 5,
   }) async {
     try {
       final userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
@@ -53,18 +50,19 @@ class FirebaseAuthRepository implements AuthRepository {
         'address': address,
         'phone': phone,
         'image': image,
+        'pointe': 5
       });
 
       return UserModel(
-        id: userId,
-        username: username,
-        email: email,
-        password: password,
-        role: role,
-        address: address,
-        phone: phone,
-        image: image,
-      );
+          id: userId,
+          username: username,
+          email: email,
+          password: password,
+          role: role,
+          address: address,
+          phone: phone,
+          image: image,
+          points: 5);
     } catch (e) {
       debugPrint('Error signing up: $e');
       return null;
@@ -72,7 +70,8 @@ class FirebaseAuthRepository implements AuthRepository {
   }
 
   @override
-  Future<UserModel?> signIn({required String email, required String password}) async {
+  Future<UserModel?> signIn(
+      {required String email, required String password}) async {
     try {
       final userCredential = await _firebaseAuth.signInWithEmailAndPassword(
         email: email,
@@ -112,10 +111,8 @@ class FirebaseAuthRepository implements AuthRepository {
   Future<void> passwordReset(String mail) async {
     try {
       await _firebaseAuth.sendPasswordResetEmail(email: mail.trim());
-     
-    }on FirebaseAuthException catch(e){
+    } on FirebaseAuthException catch (e) {
       print(e);
     }
   }
-
 }

@@ -188,33 +188,6 @@ class AuthCubit extends Cubit<AuthState> {
       }
     }
   }
-  //   Future<void> signUp() async {
-  //   if (formKeySignUp.currentState?.validate() ?? false) {
-  //     emit(const AuthState.loading());
-  //     try {
-  //       final user = await _authRepository.signUp(
-  //         email: emailController.text,
-  //         password: passwordController.text,
-  //         username: usernameController.text,
-  //         role: UserRole.CUSTOMER,
-  //         address: addressController.text,
-  //         phone: phoneController.text,
-  //         image: imageController.text,
-  //       );
-  //       if (user != null) {
-  //          final prefs = await SharedPreferences.getInstance();
-  //          await prefs.setBool(AUTH_STATUS_KEY, true);
-  //         clearControllers();
-  //         emit(AuthState.success(user: user as UserModel?));
-  //       } else {
-  //         emit(const AuthState.error('Sign up failed.'));
-  //       }
-  //     } catch (e) {
-  //       emit(AuthState.error('Error signing up: $e'));
-  //     }
-  //   }
-  // }
-
   Future<void> signOut() async {
     emit(const AuthState.loading());
     try {
