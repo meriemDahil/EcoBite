@@ -217,9 +217,9 @@ class PointsManager {
       if (points > 25) {
         // Replace 'offerid' with actual offer ID
         await PushNotificationService.sendNotificationToSelectedDriver(
-            'cpcl1j1aRTKwtnb7zK5Eml:APA91bHTpivi31dv_R6n--aB4e9o9Lcj7YNnd6BxWLiS63sImUArgmC3I5dKE--Q_i6I13bed7-kkNlM3wTHR6WB2z2nZrwuIAyTz5RcMDfit4wF6wColBo',
+            'emxKXdlwQBa6bQ-loitqEE:APA91bHPXAH2a7VzaM7l6uIWxiV2NAj0CYOm-fhti2H6u7liWJcWpWbdZ6PVXH_HyvVnht1e4f01AF-8l8bHtCkzPnhqRkDGb8VEF-AeI2NoKDWWB0g08WI',
             context,
-            'actual_offer_id', 
+            'actual_offer_id',
             'Congratulations',
             'Congratulations! You have reached 5 orders and are eligible for a 15% discount.');
       }

@@ -66,7 +66,7 @@ class AddOfferCubit extends Cubit<AddOfferState> {
          final String deviceToken = await _getDeviceTokenForNotification();
         if (deviceToken.isNotEmpty) {
           await PushNotificationService.sendNotificationToSelectedDriver(
-            'cpcl1j1aRTKwtnb7zK5Eml:APA91bHTpivi31dv_R6n--aB4e9o9Lcj7YNnd6BxWLiS63sImUArgmC3I5dKE--Q_i6I13bed7-kkNlM3wTHR6WB2z2nZrwuIAyTz5RcMDfit4wF6wColBo',
+            'emxKXdlwQBa6bQ-loitqEE:APA91bHPXAH2a7VzaM7l6uIWxiV2NAj0CYOm-fhti2H6u7liWJcWpWbdZ6PVXH_HyvVnht1e4f01AF-8l8bHtCkzPnhqRkDGb8VEF-AeI2NoKDWWB0g08WI',
             // 'fhPbwcqLRw2d2fUuVUGRaW:APA91bEPGn14zvzwG9fEJBKfP01pSzf-rf-yl89ddGBHPYekIvYyuhhkoByCS0CaIhkMqEZo6UhAi8X0tqw4Bh_ZpdFJ7mlhIjwcm0NHsflGTh8q6YhmZxo',
             context,
             'offerid',
