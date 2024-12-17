@@ -90,13 +90,15 @@ class _AddOfferState extends State<AddOffer> {
           BlocConsumer<AddOfferCubit, AddOfferState>(
             listener: (context, state) {
               if (state is AddOfferLoading) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Adding offer...')),
-                );
+               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text('Adding offer ...'),
+                  backgroundColor: Colors.black,
+                ));
               } else if (state is AddOfferSuccess) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Offer added successfully')),
-                );
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text('Offer Added Successefuly!'),
+                  backgroundColor: Colors.green,
+                ));
                 // Clear fields after success
                 context.read<AddOfferCubit>().descriptionController.clear();
                 context.read<AddOfferCubit>().mealNameController.clear();
@@ -340,7 +342,7 @@ class _AddOfferState extends State<AddOffer> {
                           label: 'Add offer',
                           color: AppColor.primary,
                           onTap: () async {
-                            await context.read<AddOfferCubit>().addOffer();
+                            await context.read<AddOfferCubit>().addOffer(context);
                           },
                         ),
                         const SizedBox(height: 16),

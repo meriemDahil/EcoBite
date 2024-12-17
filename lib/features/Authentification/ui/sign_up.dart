@@ -1,6 +1,7 @@
 import 'package:eco_bite/features/Authentification/logic/cubit/auth_cubit.dart';
 import 'package:eco_bite/features/Authentification/ui/widgets/form_sign_up.dart';
 import 'package:eco_bite/features/home/ui/home.dart';
+import 'package:eco_bite/wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -51,12 +52,7 @@ class SignUpPage extends StatelessWidget {
                   content: Text('Sign up successful! ${state.user?.username}'),
                   backgroundColor: Colors.green,
                 ));
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Home(user: state.user)),
-                  (route) => false,
-                );
+                AuthWrapper();
               }
               if (state is Loading) {
                 showDialog(

@@ -1,5 +1,9 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eco_bite/main.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 @pragma('vm:entry-point')
@@ -17,17 +21,27 @@ class NotificationService {
   bool _isFlutterLocalNotificationsInitialized = false;
 
   Future<void> initialize() async {
+    // Set up background message handler
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-    // Request permission
+    // Request notification permissions
     await _requestPermission();
 
-    // Setup message handlers
+    // Set up message handlers for foreground and background
     await _setupMessageHandlers();
 
-    // Get FCM token
-    final token = await _messaging.getToken();
+    // Get FCM token and store in Firestore
+    String? token = await FirebaseMessaging.instance.getToken();
     print('FCM Token: $token');
+    if (token != null && token != token) {
+      token = token;
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .update({
+        'fcmtoken': token,
+      });
+    }
   }
 
   Future<void> _requestPermission() async {
@@ -35,12 +49,7 @@ class NotificationService {
       alert: true,
       badge: true,
       sound: true,
-      provisional: false,
-      announcement: false,
-      carPlay: false,
-      criticalAlert: false,
     );
-
     print('Permission status: ${settings.authorizationStatus}');
   }
 
@@ -49,14 +58,13 @@ class NotificationService {
       return;
     }
 
-    // android setup
+    // Android setup
     const channel = AndroidNotificationChannel(
       'high_importance_channel',
       'High Importance Notifications',
       description: 'This channel is used for important notifications.',
       importance: Importance.high,
     );
-
     await _localNotifications
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()
@@ -64,25 +72,17 @@ class NotificationService {
 
     const initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/ic_launcher');
-
-    // ios setup
     final initializationSettingsDarwin = DarwinInitializationSettings(
-      onDidReceiveLocalNotification: (id, title, body, payload) async {
-        // Handle iOS foreground notification
-      },
+      onDidReceiveLocalNotification: (id, title, body, payload) async {},
     );
-
     final initializationSettings = InitializationSettings(
       android: initializationSettingsAndroid,
       iOS: initializationSettingsDarwin,
     );
-
-    // flutter notification setup
     await _localNotifications.initialize(
       initializationSettings,
       onDidReceiveNotificationResponse: (details) {},
     );
-
     _isFlutterLocalNotificationsInitialized = true;
   }
 
@@ -116,15 +116,15 @@ class NotificationService {
   }
 
   Future<void> _setupMessageHandlers() async {
-    //foreground message
+    // Foreground message
     FirebaseMessaging.onMessage.listen((message) {
       showNotification(message);
     });
 
-    // background message
+    // Background message
     FirebaseMessaging.onMessageOpenedApp.listen(_handleBackgroundMessage);
 
-    // opened app
+    // Handle initial message when app is opened from a notification
     final initialMessage = await _messaging.getInitialMessage();
     if (initialMessage != null) {
       _handleBackgroundMessage(initialMessage);
@@ -132,8 +132,14 @@ class NotificationService {
   }
 
   void _handleBackgroundMessage(RemoteMessage message) {
-    if (message.data['type'] == 'chat') {
-      // open chat screen
+    final type = message.data['type'];
+    final offerId = message.data['offerId'];
+
+    if (type == 'newOffer') {
+      navigatorKey.currentState?.pushNamed(
+        '/restaurantDetails',
+        arguments: offerId,
+      );
     }
   }
 }
