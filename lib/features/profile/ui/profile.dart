@@ -4,10 +4,9 @@ import 'package:eco_bite/core/labeled_textfield.dart';
 import 'package:eco_bite/features/Authentification/data/user_model.dart';
 import 'package:eco_bite/features/Authentification/logic/cubit/auth_cubit.dart';
 import 'package:eco_bite/features/Authentification/ui/sign_in.dart';
-import 'package:flutter/foundation.dart';
+import 'package:eco_bite/features/panier/ui/panier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 
 import 'dart:convert';
@@ -22,6 +21,23 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   String _address = "Fetching location...";
+
+late PointsManager points;
+  int? point; // Now point is nullable
+
+  @override
+  void initState() {
+    super.initState();
+    points = PointsManager();
+    _initializePoints();
+  }
+
+  // Async method to initialize points
+  Future<void> _initializePoints() async {
+    point = await points.getPoints(); // Await the points fetch
+    setState(() {}); // Trigger rebuild once points are fetched
+  }
+
 
   Future<void> getCurrentLocation() async {
     try {
@@ -84,12 +100,6 @@ class _ProfileState extends State<Profile> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    getCurrentLocation();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -134,7 +144,7 @@ class _ProfileState extends State<Profile> {
                 SizedBox(height: MediaQuery.of(context).size.height / 40),
                 LabeledTextField(
                   label: 'My points',
-                  hintText: '20',
+                  hintText: point.toString(),
                   keyboardType: TextInputType.phone,
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height / 40),

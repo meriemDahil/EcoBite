@@ -1,4 +1,3 @@
-
 import 'package:eco_bite/core/enum_message_type.dart';
 import 'package:eco_bite/core/size.dart';
 import 'package:flash/flash.dart';
@@ -33,8 +32,8 @@ class FlashUtils {
       icon = const Icon(Icons.error, color: Colors.white, size: 24);
     } else if (MessageType.warning == type) {
       backgroundColor = Colors.yellow;
-      message = message ?? "Warning";
-      icon = const Icon(Icons.warning, color: Colors.white, size: 24);
+      message = message ?? " Warning";
+      icon = const Icon(Icons.layers, color: Colors.white, size: 24);
     }
     context.showFlash<bool>(
       barrierDismissible: barrierDismissible,

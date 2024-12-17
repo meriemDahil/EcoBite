@@ -120,6 +120,7 @@ class AuthCubit extends Cubit<AuthState> {
           id: userData['id'],
           password: '',
           role: _parseUserRole(userData['role']),
+          points: (userData['points']),
         );
       }
       print('No user data found'); // Debug print
@@ -188,6 +189,7 @@ class AuthCubit extends Cubit<AuthState> {
       }
     }
   }
+
   Future<void> signOut() async {
     emit(const AuthState.loading());
     try {

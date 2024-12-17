@@ -2,14 +2,11 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:eco_bite/core/app_color.dart';
 import 'package:eco_bite/features/Authentification/data/user_model.dart';
-import 'package:eco_bite/features/Authentification/logic/cubit/auth_cubit.dart';
-import 'package:eco_bite/features/Authentification/ui/sign_in.dart';
 import 'package:eco_bite/features/create_offre/data/offer_model.dart';
 import 'package:eco_bite/features/home/ui/home.dart';
 import 'package:eco_bite/features/panier/ui/panier.dart';
 import 'package:eco_bite/features/profile/ui/profile.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 
 class Tabbar extends StatefulWidget {

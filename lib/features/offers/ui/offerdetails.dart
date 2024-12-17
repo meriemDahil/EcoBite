@@ -335,8 +335,9 @@ class _OfferdetailsState extends State<Offerdetails> {
                                     ),
                                     label: 'Add To Panier',
                                     color: AppColor.primary,
-                                    onTap: () {
+                                    onTap: ()async {
                                       _addToPanier(widget.offerdetails);
+                                       await PointsManager().addPoints(context);
                                       
                                     })
                               ],

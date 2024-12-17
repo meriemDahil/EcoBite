@@ -5,15 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 abstract class AuthRepository {
-  Future<UserModel?> signUp({
-    required String email,
-    required String password,
-    required String username,
-    required UserRole role,
-    String? address,
-    String? phone,
-    String? image,
-  });
+  Future<UserModel?> signUp(
+      {required String email,
+      required String password,
+      required String username,
+      required UserRole role,
+      String? address,
+      String? phone,
+      String? image,
+      double? points});
   Future<UserModel?> signIn({required String email, required String password});
   Future<void> signOut();
   Future<void> passwordReset(String mail);
@@ -32,7 +32,7 @@ class FirebaseAuthRepository implements AuthRepository {
     String? address,
     String? phone,
     String? image,
-    double? pointe = 5,
+    double? points = 5,
   }) async {
     try {
       final userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
@@ -50,7 +50,7 @@ class FirebaseAuthRepository implements AuthRepository {
         'address': address,
         'phone': phone,
         'image': image,
-        'pointe': 5
+        'points': points
       });
 
       return UserModel(
@@ -62,7 +62,7 @@ class FirebaseAuthRepository implements AuthRepository {
           address: address,
           phone: phone,
           image: image,
-          points: 5);
+          points: points);
     } catch (e) {
       debugPrint('Error signing up: $e');
       return null;
@@ -84,15 +84,15 @@ class FirebaseAuthRepository implements AuthRepository {
       if (userDoc.exists) {
         final userData = userDoc.data()!;
         return UserModel(
-          id: userId,
-          username: userData['username'],
-          email: email,
-          password: password,
-          role: UserRole.values.byName(userData['role']),
-          address: userData['address'],
-          phone: userData['phone'],
-          image: userData['image'],
-        );
+            id: userId,
+            username: userData['username'],
+            email: email,
+            password: password,
+            role: UserRole.values.byName(userData['role']),
+            address: userData['address'],
+            phone: userData['phone'],
+            image: userData['image'],
+            points: userData['points']);
       } else {
         debugPrint('User details not found in Firestore.');
         return null;
